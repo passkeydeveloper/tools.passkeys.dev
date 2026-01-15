@@ -152,6 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear previous results
         logOutput.innerHTML = '';
         resultsDiv.classList.remove('d-none');
+        setTimeout(() => {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }, 100);
         statusIndicator.className = 'alert alert-info fw-bold';
         statusIndicator.innerText = 'Validating...';
 
