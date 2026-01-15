@@ -4,61 +4,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebAuthn Related Origins Validator</title>
-    <link rel="stylesheet" href="style.css">
+    <title>WebAuthn Related Origin Requests Validator | Passkey Developer Tools</title>
+    <meta name="description" content="Validate WebAuthn Related Origins against the Level 3 Specification.">
+    <meta property="og:title" content="WebAuthn Related Origins Validator | passkeys.dev">
+    <meta property="og:type" content="website">
+
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16x16.png">
+    <link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
+    <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png" sizes="180x180" type="image/png">
+    <link rel="icon" href="../assets/img/android-chrome-192x192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="../assets/img/android-chrome-512x512.png" sizes="512x512" type="image/png">
+
+    <script src="https://unpkg.com/codeflask/build/codeflask.min.js"></script>
     <script src="https://unpkg.com/psl@1.9.0/dist/psl.min.js"></script>
     <script src="script.js" defer></script>
 </head>
 
-<body>
-    <div class="container">
-        <header>
-            <h1>ROR Validator</h1>
-            <p>Validate WebAuthn Related Origins against the Level 3 Specification.</p>
-        </header>
-
-        <main>
-            <div class="card input-section">
-                <div class="form-group">
-                    <label for="rpId">RP ID (e.g. airbnb.com)</label>
-                    <input type="text" id="rpId" placeholder="example.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="callingOrigin">Calling Origin</label>
-                    <input type="text" id="callingOrigin" placeholder="https://sub.example.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="jsonInput">Well-Known JSON Source</label>
-                    <p class="input-hint">Paste the contents of the related origins JSON here.</p>
-                    <textarea id="jsonInput" placeholder='{"origins": ["https://example.com", ...]}'></textarea>
-                </div>
-
-                <button id="validateBtn">Validate</button>
+<body class="d-flex flex-column h-100">
+    <script src="../assets/js/header.js"></script>
+    <script>loadHeader({ root: '..', base: '..' });</script>
+    <main class="flex-shrink-0">
+        <div class="container">
+            <div class="text-center mt-4">
+                <h2 class="mt-1 mb-3">WebAuthn<br />Related Origin Requests<br />Validator</h2>
+                <p>What is Related Origin Requests and how does it work? <a
+                        href="https://passkeys.dev/docs/advanced/related-origins/" target="_blank">Learn more</a></p>
             </div>
 
-            <div id="results" class="card results-section hidden">
-                <h2>Results</h2>
-                <div id="statusIndicator" class="status-indicator"></div>
+            <div class="card mt-4 mb-4">
+                <div class="card-body">
+                    <div class="mb-4 text-center">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle w-50" type="button"
+                                id="exampleDataDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Load Example Data
+                            </button>
+                            <ul class="dropdown-menu w-50" aria-labelledby="exampleDataDropdown">
+                                <li><button class="dropdown-item" id="loadValidBtn">🟢 Valid Combo</button></li>
+                                <li><button class="dropdown-item" id="loadValidCcTldBtn">🟢 Valid Combo (ccTLD)</button>
+                                </li>
+                                <li><button class="dropdown-item" id="loadInvalidBtn">🔴 Invalid Combo (too many
+                                        labels)</button></li>
+                                <li><button class="dropdown-item" id="loadMissingBtn">🔴 Invalid Combo (origin
+                                        missing)</button></li>
+                            </ul>
+                        </div>
+                    </div>
 
-                <div class="result-item">
-                    <span class="label">Valid Label Count:</span>
-                    <span class="value" id="validLabelCount">-</span>
-                </div>
+                    <div class="mb-3">
+                        <label for="rpId" class="form-label fw-bold">RP ID</label>
+                        <input type="text" class="form-control" id="rpId" placeholder="example.com">
+                        <div id="rpIdFeedback" class="invalid-feedback">
+                            RP ID must be a domain (e.g. example.com). Do not include scheme or path.
+                        </div>
+                    </div>
 
-                <div class="result-item">
-                    <span class="label">Combination Valid:</span>
-                    <span class="value" id="isValid">-</span>
-                </div>
+                    <div class="mb-3">
+                        <label for="callingOrigin" class="form-label fw-bold">Calling Origin</label>
+                        <input type="text" class="form-control" id="callingOrigin" placeholder="https://myexample.org">
+                    </div>
 
-                <div class="result-details">
-                    <h3>Detail Log</h3>
-                    <div id="logOutput" class="log-output"></div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label for="jsonInput" class="form-label fw-bold">Well-Known JSON Document</label>
+                            <button id="prettifyBtn" class="btn btn-sm btn-outline-secondary mb-2"
+                                type="button">Prettify JSON</button>
+                        </div>
+                        <div id="wellKnownLocationMsg" class="small mb-2 d-none"></div>
+                        <div class="form-text">Paste the JSON object here.</div>
+                        <div id="jsonEditor" class="form-control p-0" style="height: 375px; position: relative;"></div>
+                    </div>
+
+
+                    <div class="d-grid">
+                        <button id="validateBtn" class="btn btn-primary">Validate</button>
+                    </div>
                 </div>
             </div>
-        </main>
-    </div>
+
+            <div id="results" class="card mb-5 d-none">
+                <div class="card-header h4">
+                    Results
+                </div>
+                <div class="card-body">
+                    <div id="statusIndicator" class="alert text-center fw-bold" role="alert"></div>
+
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Valid Label Count:
+                            <span class="badge bg-secondary rounded-pill" id="validLabelCount">-</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Total Label Count:
+                            <span class="badge bg-secondary rounded-pill" id="totalLabelCount">-</span>
+                        </li>
+                    </ul>
+
+                    <div class="result-details">
+                        <h5>Detail Log</h5>
+                        <div id="logOutput" class="p-3 bg-light border rounded font-monospace small"
+                            style="max-height: 300px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/footer.js"></script>
+    <script>loadFooter({ root: '..' });</script>
+
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
