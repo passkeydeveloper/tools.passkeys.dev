@@ -60,7 +60,16 @@
               below.
               <code>ArrayBuffer</code> values should be encoded into base64url strings.
             </p>
-            <div id="jsonInput" class="form-control p-0" style="height: 350px; position: relative"></div>
+
+            <!-- JSON input -->
+            <div id="jsonEditor" class="form-control p-0" style="height: 350px; position: relative"></div>
+
+            <!-- Debug info -->
+            <div
+              id="logOutput"
+              class="p-3 mt-3 bg-light border rounded font-monospace small d-none"
+              style="max-height: 300px; overflow-y: auto;">
+            </div>
           </div>
         </div>
       </div>
@@ -69,7 +78,7 @@
 
   <script src="../assets/js/codeflask.1.4.1.min.js"></script>
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+  <script src="./script.js" type="module"></script>
 
   <script src="../assets/js/footer.js"></script>
   <script>loadFooter({ root: '..' });</script>
