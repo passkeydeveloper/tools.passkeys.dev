@@ -9,6 +9,7 @@ import { encodeBase64Url } from 'tiny-encodings';
  * @returns {any[]}
  */
 export function x5cToStrings(x5c) {
+  // TODO: Figure out if we're going to parse certs or not
   // return x5c.map((cert) => AsnParser.parse(Buffer.from(cert), Certificate));
   return x5c.map((cert) => encodeBase64Url(cert));
 }
