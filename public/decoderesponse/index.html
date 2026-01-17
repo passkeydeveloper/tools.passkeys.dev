@@ -49,44 +49,43 @@
 
       <div class="card mt-4 mb-4">
         <div class="card-body">
-          <div class="mb-3">
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="form-label fw-bold">WebAuthn Response (JSON)</span>
-            </div>
-            <p class="form-text">
-              Paste the JSON-ified output from
-              <code>navigator.credentials.create()</code> or
-              <code>navigator.credentials.get()</code>
-              below.
-              <code>ArrayBuffer</code> values should be encoded into base64url strings.
-            </p>
-
-            <!-- JSON input -->
-            <div id="jsonEditor" class="form-control p-0" style="height: 350px; position: relative"></div>
-
-            <!-- Debug info -->
-            <div
-              id="logOutput"
-              class="p-3 mt-3 bg-light border rounded font-monospace small d-none"
-              style="max-height: 300px; overflow-y: auto;">
-            </div>
-
-            <!-- Parsed output -->
-            <section id="parsedOutput" class="mt-3 d-none">
-              <span id="parsedTitle" class="form-label fw-bold" >{parsedTitle}</span>
-              <div style="overflow-x: scroll; font-size: 0.8em">
-                <andypf-json-viewer
-                  id="parsedJSON"
-                  expanded="5"
-                  indent="3"
-                  show-data-types="false"
-                  show-size="false"
-                >
-                  {parsedOutput}
-                </andypf-json-viewer>
-              </div>
-            </section>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="form-label fw-bold">WebAuthn Response (JSON)</span>
           </div>
+          <p class="form-text">
+            Paste the JSON-ified output from
+            <code>navigator.credentials.create()</code> or
+            <code>navigator.credentials.get()</code>
+            below.
+            <code>ArrayBuffer</code> values should be encoded into base64url strings.
+          </p>
+
+          <!-- JSON input -->
+          <div id="jsonEditor" class="form-control p-0" style="height: 350px; position: relative"></div>
+
+          <!-- Debug info -->
+          <div
+            id="logOutput"
+            class="p-3 mt-3 bg-light border rounded font-monospace small d-none"
+            style="max-height: 300px; overflow-y: auto;">
+          </div>
+
+          <!-- Parsed output -->
+          <section id="parsedOutput" class="mt-3 d-none">
+            <span id="parsedTitle" class="form-label fw-bold" >{parsedTitle}</span>
+            <div style="overflow-x: scroll; font-size: 0.8em">
+              <andypf-json-viewer
+                id="parsedJSON"
+                expanded="5"
+                indent="3"
+                show-data-types="false"
+                show-size="false"
+                theme="google-light"
+              >
+                {parsedOutput}
+              </andypf-json-viewer>
+            </div>
+          </section>
         </div>
       </div>
     </div>
