@@ -1,5 +1,6 @@
 import { log } from '../assets/js/common.js';
 import { decodeRegistrationCredential } from './decodeRegistrationCredential.js';
+import "json-viewer";
 
 // Create an instance of our fancy text editor
 const flask = new CodeFlask("#jsonEditor", { language: "json", lineNumbers: false });
@@ -7,6 +8,7 @@ const flaskTextarea = document.querySelector("#jsonEditor textarea");
 const logOutputElem = document.getElementById('logOutput');
 const parsedOutputElem = document.getElementById('parsedOutput');
 const parsedTitleElem = document.getElementById('parsedTitle');
+const parsedJSONElem = document.getElementById('parsedJSON');
 
 // Set a placeholder to help communicate the shape of the JSON that should be pasted in
 flaskTextarea.placeholder = `{

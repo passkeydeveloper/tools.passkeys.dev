@@ -13,11 +13,21 @@ import { decodeBase64Url } from 'tiny-encodings';
  */
 export function decodeAttestationObject(base64urlString) {
   const attestationObjectBytes = decodeBase64Url(base64urlString);
-  const decoded = decodeCBOR(attestationObjectBytes);
+  const decodedMap = decodeCBOR(attestationObjectBytes);
+  const attStmtMap = decodedMap.get('attStmt');
+
   return {
-    fmt: decoded.get('fmt'),
-    attStmt: decoded.get('attStmt'),
-    authData: decoded.get('authData'),
+    fmt: decodedMap.get('fmt'),
+    attStmt: {
+      sig: attStmtMap.get('sig'),
+      alg: attStmtMap.get('alg'),
+      x5c: attStmtMap.get('x5c'),
+      response: attStmtMap.get('response'),
+      ver: attStmtMap.get('ver'),
+      certInfo: attStmtMap.get('certInfo'),
+      pubArea: attStmtMap.get('pubArea'),
+    },
+    authData: decodedMap.get('authData'),
   };
 }
 

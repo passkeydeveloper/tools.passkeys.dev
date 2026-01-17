@@ -72,15 +72,18 @@
             </div>
 
             <!-- Parsed output -->
-            <section id="parsedOutput" class="mt-3">
-              <span class="form-label fw-bold" id="parsedTitle">{parsedTitle}</span>
-              <div style="overflow-x: scroll">
-                <ReactJson
-                  src={decoded?.value || {}}
-                  collapseStringsAfterLength={50}
-                  collapsed={5}
-                  displayDataTypes={false}
-                />
+            <section id="parsedOutput" class="mt-3 d-none">
+              <span id="parsedTitle" class="form-label fw-bold" >{parsedTitle}</span>
+              <div style="overflow-x: scroll; font-size: 0.8em">
+                <andypf-json-viewer
+                  id="parsedJSON"
+                  expanded="5"
+                  indent="3"
+                  show-data-types="false"
+                  show-size="false"
+                >
+                  {parsedOutput}
+                </andypf-json-viewer>
               </div>
             </section>
           </div>
