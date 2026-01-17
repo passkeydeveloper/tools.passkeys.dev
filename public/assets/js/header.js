@@ -5,6 +5,7 @@ function loadHeader(options) {
     const homePath = `${rootPath}/`;
     const featureDetectPath = `${basePath}/featuredetect/`;
     const relatedOriginsPath = `${basePath}/relatedorigins/`;
+    const decodeResponsePath = `${basePath}/decoderesponse/`;
 
     const currentPath = window.location.pathname;
 
@@ -33,6 +34,7 @@ function loadHeader(options) {
                     <ul class="dropdown-menu" aria-labelledby="toolSelectDropdown">
                         <li><a class="dropdown-item ${isActive('featuredetect') ? 'active' : ''}" href="${featureDetectPath}">Feature Detection</a></li>
                         <li><a class="dropdown-item ${isActive('relatedorigins') ? 'active' : ''}" href="${relatedOriginsPath}">Related Origin Requests Validator</a></li>
+                        <li><a class="dropdown-item ${isActive('decoderesponse') ? 'active' : ''}" href="${decodeResponsePath}">Response Decoder</a></li>
                     </ul>
                 </div>
             </div>
