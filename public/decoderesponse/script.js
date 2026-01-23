@@ -5,6 +5,7 @@ import "json-viewer";
 
 // Create an instance of our fancy text editor
 const flask = new CodeFlask("#jsonEditor", { language: "json", lineNumbers: false });
+/** @type {HTMLTextAreaElement} */
 const flaskTextarea = document.querySelector("#jsonEditor textarea");
 const logOutputElem = document.getElementById('logOutput');
 const parsedOutputElem = document.getElementById('parsedOutput');
@@ -20,6 +21,11 @@ flaskTextarea.placeholder = `{
   },
   "type": "public-key"
 }`;
+
+// Set up clicking on the text area selecting all the text for immediate pasting
+flaskTextarea.addEventListener('focus', () => {
+  flaskTextarea.select();
+})
 
 // Attempt to parse whatever was just pasted in
 flask.onUpdate((code) => {
