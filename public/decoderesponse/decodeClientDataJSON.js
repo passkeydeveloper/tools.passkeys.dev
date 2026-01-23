@@ -1,4 +1,3 @@
-
 import { decodeBase64Url } from 'tiny-encodings';
 
 /**

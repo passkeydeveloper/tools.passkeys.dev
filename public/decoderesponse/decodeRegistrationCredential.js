@@ -13,7 +13,9 @@ export function decodeRegistrationCredential(credential) {
   const { response } = credential;
 
   if (!response.clientDataJSON || !response.attestationObject) {
-    throw new Error('The "clientDataJSON" and/or "attestationObject" properties are missing from "response"');
+    throw new Error(
+      'The "clientDataJSON" and/or "attestationObject" properties are missing from "response"',
+    );
   }
 
   const clientDataJSON = decodeClientDataJSON(response.clientDataJSON);

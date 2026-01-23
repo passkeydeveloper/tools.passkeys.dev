@@ -29,9 +29,12 @@ const coseAlgNameMap = {
   '-48': 'ML-DSA-44',
   '-47': 'ES256K',
   '-46': 'HSS-LMS',
-  '-45': 'SHAKE256 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
-  '-44': 'SHA-512 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
-  '-43': 'SHA-384 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
+  '-45':
+    'SHAKE256 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
+  '-44':
+    'SHA-512 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
+  '-43':
+    'SHA-384 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
   '-42': 'RSAES-OAEP w/ SHA-512',
   '-41': 'RSAES-OAEP w/ SHA-256',
   '-40': 'RSAES-OAEP w/ RFC 8017 default parameters',
@@ -50,11 +53,16 @@ const coseAlgNameMap = {
   '-27': 'ECDH-SS + HKDF-256',
   '-26': 'ECDH-ES + HKDF-512',
   '-25': 'ECDH-ES + HKDF-256',
-  '-18': 'SHAKE128 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
-  '-17': 'SHA-512/256 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
-  '-16': 'SHA-256 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
-  '-15': 'SHA-256/64 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
-  '-14': 'SHA-1 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
+  '-18':
+    'SHAKE128 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
+  '-17':
+    'SHA-512/256 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
+  '-16':
+    'SHA-256 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
+  '-15':
+    'SHA-256/64 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
+  '-14':
+    'SHA-1 (TEMPORARY - registered 2019-08-13, extension registered 2020-06-19, expires 2021-08-13)',
   '-13': 'direct+HKDF-AES-256',
   '-12': 'direct+HKDF-AES-128',
   '-11': 'direct+HKDF-SHA-512',
@@ -86,4 +94,4 @@ const coseAlgNameMap = {
   '31': 'AES-CCM-16-128-256',
   '32': 'AES-CCM-64-128-128',
   '33': 'AES-CCM-64-128-256',
-}
+};

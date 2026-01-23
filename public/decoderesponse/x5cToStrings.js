@@ -1,4 +1,4 @@
-import { encodeBase64  } from 'tiny-encodings';
+import { encodeBase64 } from 'tiny-encodings';
 
 /**
  * Parse X.509 certificates into something legible

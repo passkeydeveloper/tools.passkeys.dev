@@ -15,11 +15,10 @@ const COSEKEYS = {
   mod: -1,
   exp: -2,
   // ML-DSA
-  pub: -1
-}
+  pub: -1,
+};
 
 /**
- *
  * @param {Uint8Array} authData
  * @returns {AuthenticatorData} Parsed AuthenticatorData
  */
@@ -35,6 +34,7 @@ export function parseAuthData(authData) {
   /** @type {number} */
   const flagsInt = flagsBuf[0];
 
+  // deno-fmt-ignore
   const flags = {
     userPresent:    !!(flagsInt & (1 << 0)), // User Presence
     userVerified:   !!(flagsInt & (1 << 2)), // User Verified
@@ -47,7 +47,8 @@ export function parseAuthData(authData) {
   const counterBuf = buffer.slice(0, 4);
   buffer = buffer.slice(4);
 
-  const counter = new DataView(counterBuf.buffer, counterBuf.byteOffset).getUint32(0, false);
+  const counter = new DataView(counterBuf.buffer, counterBuf.byteOffset)
+    .getUint32(0, false);
 
   /** @type {Uint8Array?} */
   let aaguid;
@@ -65,11 +66,12 @@ export function parseAuthData(authData) {
     const credIDLenBuf = buffer.slice(0, 2);
     buffer = buffer.slice(2);
 
-    const credIDLen = new DataView(credIDLenBuf.buffer, credIDLenBuf.byteOffset).getUint16(0, false);
+    const credIDLen = new DataView(credIDLenBuf.buffer, credIDLenBuf.byteOffset)
+      .getUint16(0, false);
     let credentialIDBuffer = buffer.slice(0, credIDLen);
     buffer = buffer.slice(credIDLen);
 
-    // Base64 to Base64URL
+    // Make credential ID and public key readable
     credentialID = encodeBase64Url(credentialIDBuffer);
     credentialPublicKey = encodeBase64Url(buffer);
 
@@ -84,23 +86,36 @@ export function parseAuthData(authData) {
       const kty = pubKey.get(COSEKEYS.kty);
 
       parsedCredentialPublicKey.keyType = coseKeyTypeToString(kty);
-      parsedCredentialPublicKey.algorithm = coseAlgToString(pubKey.get(COSEKEYS.alg));
+      parsedCredentialPublicKey.algorithm = coseAlgToString(
+        pubKey.get(COSEKEYS.alg),
+      );
 
       if (kty === 3) {
         // RSA
-        parsedCredentialPublicKey.modulus = encodeBase64Url(Uint8Array.from(pubKey.get(COSEKEYS.mod)));
-        parsedCredentialPublicKey.exponent = parseInt(encodeHex(Uint8Array.from(pubKey.get(COSEKEYS.exp))), 16);
+        parsedCredentialPublicKey.modulus = encodeBase64Url(
+          Uint8Array.from(pubKey.get(COSEKEYS.mod)),
+        );
+        parsedCredentialPublicKey.exponent = parseInt(
+          encodeHex(Uint8Array.from(pubKey.get(COSEKEYS.exp))),
+          16,
+        );
       } else if (kty === 7) {
         // ML-DSA
-        parsedCredentialPublicKey.pub = encodeBase64Url(Uint8Array.from(pubKey.get(COSEKEYS.pub)));
+        parsedCredentialPublicKey.pub = encodeBase64Url(
+          Uint8Array.from(pubKey.get(COSEKEYS.pub)),
+        );
       } else {
         // Everything else, including EC2 and OKP
         parsedCredentialPublicKey.curve = pubKey.get(COSEKEYS.crv);
-        parsedCredentialPublicKey.x = encodeBase64Url(Uint8Array.from(pubKey.get(COSEKEYS.x)));
+        parsedCredentialPublicKey.x = encodeBase64Url(
+          Uint8Array.from(pubKey.get(COSEKEYS.x)),
+        );
 
         // y isn't present in OKP certs
         if (pubKey.get(COSEKEYS.y)) {
-          parsedCredentialPublicKey.y = encodeBase64Url(Uint8Array.from(pubKey.get(COSEKEYS.y)));
+          parsedCredentialPublicKey.y = encodeBase64Url(
+            Uint8Array.from(pubKey.get(COSEKEYS.y)),
+          );
         }
       }
     }
@@ -114,7 +129,7 @@ export function parseAuthData(authData) {
   };
 
   if (aaguid) {
-    toReturn.aaguid = aaguidToString(aaguid)
+    toReturn.aaguid = aaguidToString(aaguid);
   }
 
   if (credentialID) {

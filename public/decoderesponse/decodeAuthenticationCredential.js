@@ -12,15 +12,19 @@ export function decodeAuthenticationCredential(credential) {
   const { response } = credential;
 
   if (
-    !response.clientDataJSON
-    || !response.authenticatorData
-    || !response.signature
+    !response.clientDataJSON ||
+    !response.authenticatorData ||
+    !response.signature
   ) {
-    throw new Error('The "clientDataJSON", "attestationObject", and/or "signature" properties are missing from "response"');
+    throw new Error(
+      'The "clientDataJSON", "attestationObject", and/or "signature" properties are missing from "response"',
+    );
   }
 
   const clientDataJSON = decodeClientDataJSON(response.clientDataJSON);
-  const authenticatorData = parseAuthData(decodeBase64Url(response.authenticatorData));
+  const authenticatorData = parseAuthData(
+    decodeBase64Url(response.authenticatorData),
+  );
 
   return {
     ...credential,
