@@ -183,4 +183,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+_output/
+
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node,Linux,macOS,Windows
