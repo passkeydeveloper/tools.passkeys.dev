@@ -7,17 +7,18 @@ export default function (eleventyConfig) {
   eleventyConfig.setInputDirectory(inputPath);
   eleventyConfig.setOutputDirectory("./_site");
 
+  // Generate a sitemap
   eleventyConfig.addPlugin(sitemap, {
     sitemap: {
       hostname: 'https://tools.passkeys.dev',
     },
   });
 
-  // Assets for the homepage
+  // Specify assets for the homepage
   eleventyConfig.addPassthroughCopy(`${inputPath}/assets/`);
   eleventyConfig.addPassthroughCopy(`${inputPath}/*.{png,txt}`);
 
-  // Tool-specific assets
+  // Declare tool-specific assets
   eleventyConfig.addPassthroughCopy(`${inputPath}/featuredetect/**/*.{png,txt}`);
   eleventyConfig.addPassthroughCopy(`${inputPath}/relatedorigins/**/*.{js,}`);
   eleventyConfig.addPassthroughCopy(`${inputPath}/responsedecoder/**/*.{js,}`);
