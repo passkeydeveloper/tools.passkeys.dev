@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://tools.passkeys.dev/</loc>
+        <lastmod>2026-01-27T20:35:59.211Z</lastmod>
+    </url>
+    <url>
+        <loc>https://tools.passkeys.dev/featuredetect</loc>
+        <lastmod>2026-01-26T22:54:11.253Z</lastmod>
+    </url>
+    <url>
+        <loc>https://tools.passkeys.dev/relatedorigins</loc>
+        <lastmod>2026-01-26T22:54:11.253Z</lastmod>
+    </url>
+</urlset>

@@ -22,4 +22,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy(`${inputPath}/featuredetect/**/*.{png,txt}`);
   eleventyConfig.addPassthroughCopy(`${inputPath}/relatedorigins/**/*.{js,}`);
   eleventyConfig.addPassthroughCopy(`${inputPath}/responsedecoder/**/*.{js,}`);
+
+  // Configure global site data for templates
+  eleventyConfig.addGlobalData("siteTitle", "Passkey Developer Tools");
 }

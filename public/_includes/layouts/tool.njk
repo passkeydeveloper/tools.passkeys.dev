@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include 'layouts/head.njk' %}
+
+  <body class="d-flex flex-column h-100">
+    <script src="/assets/js/header.js"></script>
+    <script>
+      loadHeader({ root: '..', base: '..' });
+    </script>
+
+    <main class="flex-shrink-0">
+      {{ content | safe }}
+    </main>
+
+    <script src="/assets/js/footer.js"></script>
+    <script>
+      loadFooter({ root: '..' });
+    </script>
+  </body>
+</html>
