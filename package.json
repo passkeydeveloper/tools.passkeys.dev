@@ -1,0 +1,20 @@
+{
+  "name": "11ty-test-site",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "scripts": {
+    "start": "npx @11ty/eleventy --serve",
+    "build": "rimraf ./_site && npx @11ty/eleventy"
+  },
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "rimraf": "^6.1.2"
+  }
+}
