@@ -1,9 +1,17 @@
+import sitemap from '@quasibit/eleventy-plugin-sitemap';
+
 /** @param {import("@11ty/eleventy/UserConfig").default} eleventyConfig */
 export default function (eleventyConfig) {
   const inputPath = "./public";
 
   eleventyConfig.setInputDirectory(inputPath);
   eleventyConfig.setOutputDirectory("./_site");
+
+  eleventyConfig.addPlugin(sitemap, {
+    sitemap: {
+      hostname: 'https://tools.passkeys.dev',
+    },
+  });
 
   // Assets for the homepage
   eleventyConfig.addPassthroughCopy(`${inputPath}/assets/`);
