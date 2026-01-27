@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passkey Developer Tools</title>
+    <meta name="description" content="Developer tools for passkeys and WebAuthn">
+    <link rel="canonical" href="https://tools.passkeys.dev/">
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="Passkey Developer Tools">
+    <meta property="og:title" content="Passkey Developer Tools">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Developer tools for passkeys and WebAuthn">
+    <meta property="og:url" content="https://tools.passkeys.dev/">
+    <meta property="og:image" content="/assets/img/social-card.png">
+    <meta property="og:locale" content="en">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:title" content="Passkey Developer Tools">
+    <meta name="twitter:description" content="Developer tools for passkeys and WebAuthn">
+    <meta name="twitter:image" content="/assets/img/social-card.png">
+    
+    <!-- Styles -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+    <link rel="icon" href="/assets/img/favicon.ico" sizes="32x32">
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <main class="flex-shrink-0">
+        <main class="flex-shrink-0">
+  <div class="container" style="max-width: 960px;">
+    <div class="text-center mt-5 mb-5 pt-4">
+      <img src="assets/img/pdd-icon-color-simple.svg" height="120px" alt="Passkeys.dev Icon" class="mb-3">
+      <h1 class="display-4 fw-bold text-dark">Passkey Developer Tools</h1>
+      <p class="lead text-secondary mt-3">Tools for building and debugging passkeys & WebAuthn.
+      </p>
+      <p>Want to learn more about deploying passkeys?<br />
+        <span class="fs-5">Check out <a href="https://passkeys.dev/">passkeys.dev</a></span>
+      </p>
+
+    </div>
+
+    <div class="row g-4 justify-content-center pb-5">
+      <!-- Feature Detect Tool -->
+      <div class="col-md-6">
+        <a href="featuredetect/" class="card h-100 shadow border-0 hover-lift rounded-4 text-decoration-none">
+          <div class="card-body p-5 d-flex flex-column text-center">
+            <div class="mb-3">
+              <span class="display-4"><i class="bi bi-search"></i></span>
+            </div>
+            <h2 class="card-title fw-bold mb-3 text-dark">Feature Detection</h2>
+            <p class="card-text text-dark flex-grow-1 lead fs-6">
+              Test your browser's WebAuthn capabilities for passkeys.
+              This also serves as a demo for the new getClientCapabilities() method!
+            </p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Related Origins Validator -->
+      <div class="col-md-6">
+        <a href="relatedorigins/" class="card h-100 shadow border-0 hover-lift rounded-4 text-decoration-none">
+          <div class="card-body p-5 d-flex flex-column text-center">
+            <div class="mb-3">
+              <span class="display-4"><i class="bi bi-braces"></i></span>
+            </div>
+            <h2 class="card-title fw-bold mb-3 text-dark">Related Origins Validator</h2>
+            <p class="card-text text-dark flex-grow-1 lead fs-6">
+              Validate and test your Related Origin Requests configuration against the specification
+              or just try things out as part of planning a deployment!
+            </p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Response Decoder -->
+      <div class="col-md-6">
+        <a href="responsedecoder/" class="card h-100 shadow border-0 hover-lift rounded-4 text-decoration-none">
+          <div class="card-body p-5 d-flex flex-column text-center">
+            <div class="mb-3">
+              <span class="display-4"><i class="bi bi-filetype-json"></i></span>
+            </div>
+            <h2 class="card-title fw-bold mb-3 text-dark">Response Decoder</h2>
+            <p class="card-text text-dark flex-grow-1 lead fs-6">
+              Get a human-readable view into WebAuthn registration and authentication responses.
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      Feedback? Want to see another tool?
+      <p class="mb-0 fs-4">
+        <a href="mailto:tools@passkeys.dev"><i class="bi bi-envelope-at-fill me-2"></i></a>
+        <a href="https://bsky.app/profile/passkeys.dev" target="_blank"><i class="bi bi-bluesky me-2"></i></a>
+        <a href="https://fosstodon.org/@passkeysdev" target="_blank"><i class="bi bi-mastodon"></i></a>
+      </p>
+    </div>
+  </div>
+</main>
+    </main>
+
+    <footer class="footer mt-auto py-4 bg-white border-top">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center">
+            <!-- Left Side: Logo + Text -->
+            <div class="d-flex align-items-center mb-2 mb-md-0" style="min-width: 0;">
+                <a href="https://passkeys.dev" class="d-flex align-items-center text-decoration-none text-dark me-3 flex-shrink-0">
+                    <img src="/assets/img/pdd-icon-color-simple.svg" alt="Logo" width="24" height="24" class="me-2">
+                    <span class="fw-bold">passkeys.dev</span>
+                </a>
+                <span class="text-muted small border-start ps-3 lh-sm">
+                    Brought to you by members of the <a href="https://www.w3.org/groups/cg/wica/" target="_blank" class="text-decoration-none text-success">W3C Web Identity & Credentials Adoption CG</a> and the <a href="https://fidoalliance.org/" target="_blank" class="text-decoration-none text-success">FIDO Alliance</a>.
+                </span>
+            </div>
+            
+            <!-- Right Side: Privacy -->
+            <div class="flex-shrink-0 ms-md-3">
+                    <a href="https://passkeys.dev/privacy-policy/" target="_blank" class="text-decoration-none text-muted small">Privacy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

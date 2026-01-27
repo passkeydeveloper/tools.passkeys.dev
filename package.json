@@ -1,0 +1,28 @@
+{
+  "name": "tools.passkeys.dev",
+  "version": "1.0.0",
+  "description": "Developer tools for passkeys and WebAuthn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/passkeydeveloper/tools.passkeys.dev.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/passkeydeveloper/tools.passkeys.dev/issues"
+  },
+  "homepage": "https://github.com/passkeydeveloper/tools.passkeys.dev#readme",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
+    "eleventy-plugin-metagen": "^1.8.3"
+  }
+}

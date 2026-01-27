@@ -1,0 +1,14 @@
+{% include "partials/head.liquid" %}
+
+<body class="d-flex flex-column h-100">
+    {% include "partials/topnav.liquid" %}
+
+    <main class="flex-shrink-0">
+        {{ content }}
+    </main>
+
+    {% include "partials/footer.liquid" %}
+
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

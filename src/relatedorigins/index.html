@@ -1,0 +1,91 @@
+---
+layout: layouts/base.liquid
+title: "WebAuthn Related Origin Requests Validator | Passkey Developer Tools"
+---
+
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="mt-1 mb-3">WebAuthn<br />Related Origin Requests<br />Validator</h2>
+            <p>What is Related Origin Requests and how does it work? <a
+                    href="https://passkeys.dev/docs/advanced/related-origins/" target="_blank">Learn more</a></p>
+        </div>
+
+        <div class="card mt-4 mb-4">
+            <div class="card-body">
+                <div class="mb-4 text-center">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle w-50" type="button"
+                            id="exampleDataDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Load Example Data
+                        </button>
+                        <ul class="dropdown-menu w-50" aria-labelledby="exampleDataDropdown">
+                            <li><button class="dropdown-item" id="loadValidBtn">🟢 Valid Combo</button></li>
+                            <li><button class="dropdown-item" id="loadValidCcTldBtn">🟢 Valid Combo (ccTLD)</button>
+                            </li>
+                            <li><button class="dropdown-item" id="loadInvalidBtn">🔴 Invalid Combo (too many
+                                    labels)</button></li>
+                            <li><button class="dropdown-item" id="loadMissingBtn">🔴 Invalid Combo (origin
+                                    missing)</button></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="rpId" class="form-label fw-bold">RP ID</label>
+                    <input type="text" class="form-control" id="rpId" placeholder="example.com">
+                    <div id="rpIdFeedback" class="invalid-feedback">
+                        RP ID must be a domain (e.g. example.com). Do not include scheme or path.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="callingOrigin" class="form-label fw-bold">Calling Origin</label>
+                    <input type="text" class="form-control" id="callingOrigin" placeholder="https://myexample.org">
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <label for="jsonInput" class="form-label fw-bold">Well-Known JSON Document</label>
+                        <button id="prettifyBtn" class="btn btn-sm btn-outline-secondary mb-2" type="button">Prettify
+                            JSON</button>
+                    </div>
+                    <div id="wellKnownLocationMsg" class="small mb-2 d-none"></div>
+                    <div class="form-text">Paste the JSON object here.</div>
+                    <div id="jsonEditor" class="form-control p-0" style="height: 350px; position: relative;"></div>
+                </div>
+
+
+                <div class="d-grid">
+                    <button id="validateBtn" class="btn btn-primary">Validate</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results" class="card mb-5 d-none">
+            <div class="card-header h4">
+                Results
+            </div>
+            <div class="card-body">
+                <div id="statusIndicator" class="alert text-center fw-bold" role="alert"></div>
+
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Valid Label Count:
+                        <span class="badge bg-secondary rounded-pill" id="validLabelCount">-</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Total Label Count:
+                        <span class="badge bg-secondary rounded-pill" id="totalLabelCount">-</span>
+                    </li>
+                </ul>
+
+                <div class="result-details">
+                    <h5>Detail Log</h5>
+                    <div id="logOutput" class="p-3 bg-light border rounded font-monospace small"
+                        style="max-height: 300px; overflow-y: auto;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
