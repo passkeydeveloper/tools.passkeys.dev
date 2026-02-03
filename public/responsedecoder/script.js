@@ -70,7 +70,7 @@ function showDecodedOutput(responseType, decodedResponse) {
 }
 
 /**
- * @param {string} code The WebAuthn response being parsed
+ * @param {string} rawCredential The WebAuthn response being parsed
  * @returns void
  */
 function decodeResponse(rawCredential) {

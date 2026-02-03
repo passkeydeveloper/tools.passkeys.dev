@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://tools.passkeys.dev/</loc>
-        <lastmod>2026-01-27T17:54:12.213Z</lastmod>
+        <lastmod>2026-01-27T20:35:59.211Z</lastmod>
     </url>
     <url>
         <loc>https://tools.passkeys.dev/featuredetect</loc>
@@ -14,6 +14,6 @@
     </url>
     <url>
         <loc>https://tools.passkeys.dev/responsedecoder</loc>
-        <lastmod>2026-01-27T17:54:12.207Z</lastmod>
+        <lastmod>2026-02-02T15:41:47.466Z</lastmod>
     </url>
 </urlset>
