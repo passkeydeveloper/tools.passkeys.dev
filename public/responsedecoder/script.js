@@ -30,6 +30,23 @@ flaskTextarea.addEventListener('focus', () => {
   flaskTextarea.select();
 });
 
+/**
+ * Take a pasted JSON response and try to prettify it
+ */
+flaskTextarea.addEventListener('paste', (event) => {
+  try {
+    const pasted = event.clipboardData.getData("text");
+    const pastedJSON = JSON.parse(pasted);
+    const prettifiedJSON = JSON.stringify(pastedJSON, null, 2);
+    flask.updateCode(prettifiedJSON);
+
+    // Prevent the original content from being appended to the prettified JSON
+    event.preventDefault();
+  } catch (err) {
+    // Allow the textarea to behave as usual
+  }
+});
+
 // Attempt to parse whatever was just pasted in
 flask.onUpdate((code) => {
   resetUI();
