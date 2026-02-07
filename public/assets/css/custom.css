@@ -1,3 +1,132 @@
+footer.footer {
+  background-color: var(--color-bg) !important;
+  color: var(--color-text) !important;
+  border-top: 1px solid #343a40 !important;
+}
+
+.dark-mode footer.footer {
+  background-color: var(--color-bg) !important;
+  color: var(--color-text) !important;
+  border-top: 1px solid #23272b !important;
+}
+
+.dark-mode .footer .text-muted,
+.dark-mode .footer .text-dark,
+.dark-mode .footer .text-success {
+  color: var(--color-secondary) !important;
+}
+/* Dark mode variables and base styles */
+:root {
+  --color-bg: #f8f9fa;
+  --color-text: #212529;
+  --color-card-bg: #fff;
+  --color-card-text: #212529;
+  --color-link: #0d6efd;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #181a1b;
+    --color-text: #f8fafd;
+    --color-card-bg: #23272b;
+    --color-card-text: #f8fafd;
+    --color-link: #66aaff;
+    --color-secondary: #b0b8c1;
+    --color-heading: #fff;
+  }
+}
+
+
+
+body,
+html {
+  background-color: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+.container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+  background: transparent;
+}
+
+.dark-mode main,
+.dark-mode .container,
+.dark-mode .row,
+.dark-mode .col-md-6,
+.dark-mode .text-center,
+.dark-mode .pb-5 {
+  background-color: var(--color-bg) !important;
+}
+
+h1, h2, h3, h4, h5, h6, .display-4, .fw-bold {
+  color: var(--color-heading, var(--color-text)) !important;
+}
+
+.lead, .text-secondary, .fs-6, .fs-5, .fs-4, .fs-3, .fs-2, .fs-1 {
+  color: var(--color-secondary, var(--color-text)) !important;
+}
+
+
+.card,
+.card-body {
+  background-color: var(--color-card-bg) !important;
+  color: var(--color-card-text) !important;
+  border-color: #343a40 !important;
+}
+
+
+a,
+a:visited {
+  color: var(--color-link);
+}
+
+a:hover, a:focus {
+  color: #a3d8ff;
+}
+
+
+.dark-mode {
+  --color-bg: #181a1b !important;
+  --color-text: #f8fafd !important;
+  --color-card-bg: #23272b !important;
+  --color-card-text: #f8fafd !important;
+  --color-link: #66aaff !important;
+  --color-secondary: #b0b8c1 !important;
+  --color-heading: #fff !important;
+}
+
+body.dark-mode,
+html.dark-mode {
+  background-color: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6, .dark-mode .display-4, .dark-mode .fw-bold {
+  color: var(--color-heading) !important;
+}
+
+.dark-mode .lead, .dark-mode .text-secondary, .dark-mode .fs-6, .dark-mode .fs-5, .dark-mode .fs-4, .dark-mode .fs-3, .dark-mode .fs-2, .dark-mode .fs-1 {
+  color: var(--color-secondary) !important;
+}
+
+.dark-mode .card,
+.dark-mode .card-body {
+  background-color: var(--color-card-bg) !important;
+  color: var(--color-card-text) !important;
+  border-color: #343a40 !important;
+}
+
+.dark-mode a,
+.dark-mode a:visited {
+  color: var(--color-link) !important;
+}
+
+.dark-mode a:hover, .dark-mode a:focus {
+  color: #a3d8ff !important;
+}
 html,
 body {
   height: 100%;

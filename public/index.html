@@ -32,7 +32,39 @@
     <link rel="icon" href="assets/img/android-chrome-512x512.png" sizes="512x512" type="image/png">
 </head>
 
-<body class="d-flex flex-column h-100 bg-light">
+<body class="d-flex flex-column h-100 bg-light" id="body">
+    <div class="text-end pt-3 pe-2">
+        <button id="darkModeToggle" class="btn btn-outline-secondary btn-sm" aria-label="Toggle dark mode">
+            <i class="bi bi-moon"></i> <span id="darkModeText">Dark Mode</span>
+        </button>
+    </div>
+        <script>
+        // Dark mode toggle logic
+        const body = document.getElementById('body');
+        const toggle = document.getElementById('darkModeToggle');
+        const text = document.getElementById('darkModeText');
+        function setDarkMode(on) {
+            if (on) {
+                body.classList.add('dark-mode');
+                text.textContent = 'Light Mode';
+                toggle.querySelector('i').className = 'bi bi-brightness-high';
+                localStorage.setItem('darkMode', '1');
+            } else {
+                body.classList.remove('dark-mode');
+                text.textContent = 'Dark Mode';
+                toggle.querySelector('i').className = 'bi bi-moon';
+                localStorage.setItem('darkMode', '0');
+            }
+        }
+        // Initial state
+        const darkPref = localStorage.getItem('darkMode');
+        if (darkPref === '1' || (darkPref === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setDarkMode(true);
+        }
+        toggle.addEventListener('click', () => {
+            setDarkMode(!body.classList.contains('dark-mode'));
+        });
+        </script>
     <main class="flex-shrink-0">
         <div class="container" style="max-width: 960px;">
             <div class="text-center mt-5 mb-5 pt-4">
