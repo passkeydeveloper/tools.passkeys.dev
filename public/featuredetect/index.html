@@ -81,6 +81,10 @@
                             Conditional Create (Passkey Upgrades)
                             <span id="pill-condcreate" class="badge rounded-pill bg-secondary">Unknown</span>
                         </li>
+                        <li id="immget" class="list-group-item d-flex justify-content-between align-items-center">
+                            Immediate Get*
+                            <span id="pill-immget" class="badge rounded-pill bg-secondary">Unknown</span>
+                        </li>
                         <li id="ror" class="list-group-item d-flex justify-content-between align-items-center">
                             <a href="https://passkeys.dev/docs/advanced/related-origins/" target="_blank">
                                 Related Origin Requests</a>
@@ -291,6 +295,9 @@
 
                         // Conditional Create
                         if (capabilities.hasOwnProperty('conditionalCreate')) capabilities.conditionalCreate ? updateStyle("condcreate", "s") : updateStyle("condcreate", "ns")
+
+                        // Immediate Get
+                        if (capabilities.hasOwnProperty('immediateGet')) capabilities.immediateGet ? updateStyle("immget", "s") : updateStyle("immget", "ns")
 
                         // Related Origins
                         if (capabilities.hasOwnProperty('relatedOrigins')) capabilities.relatedOrigins ? updateStyle("ror", "s") : updateStyle("ror", "ns")
