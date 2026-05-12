@@ -130,6 +130,11 @@
                     <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#extensions">
                         <div class="accordion-body">
                             <ul>
+                                <li id="extCmtgKey"
+                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                    Credential Manager Trust Group Key (cmtgKey)*
+                                    <span id="pill-extCmtgKey" class="badge rounded-pill bg-secondary">Unknown</span>
+                                </li>
                                 <li id="extCredProps"
                                     class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="https://www.w3.org/TR/webauthn-2/#sctn-authenticator-credential-properties-extension"
@@ -312,6 +317,7 @@
                         if (capabilities.hasOwnProperty('extension:getCredBlob')) capabilities['extension:getCredBlob'] ? updateStyle("extGetCredBlob", "s") : updateStyle("extGetCredBlob", "ns")
                         if (capabilities.hasOwnProperty('extension:payment')) capabilities['extension:payment'] ? updateStyle("extPayment", "s") : updateStyle("extPayment", "ns")
                         if (capabilities.hasOwnProperty('extension:prf')) capabilities['extension:prf'] ? updateStyle("extPrf", "s") : updateStyle("extPrf", "ns")
+                        if (capabilities.hasOwnProperty('extension:cmtgKey')) capabilities['extension:cmtgKey'] ? updateStyle("extCmtgKey", "s") : updateStyle("extCmtgKey", "ns")
 
                     } catch (error) {
                         console.error("Error fetching client capabilities:", error);
