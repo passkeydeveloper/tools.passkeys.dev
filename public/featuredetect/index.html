@@ -78,8 +78,13 @@
                             <span id="pill-condget" class="badge rounded-pill bg-secondary">Unknown</span>
                         </li>
                         <li id="condcreate" class="list-group-item d-flex justify-content-between align-items-center">
-                            Conditional Create (Passkey Upgrades)
+                            <a href="https://passkeys.dev/docs/reference/terms/#conditional-create" target="_blank">Conditional
+                              Create (Passkey Upgrades)</a>
                             <span id="pill-condcreate" class="badge rounded-pill bg-secondary">Unknown</span>
+                        </li>
+                        <li id="immget" class="list-group-item d-flex justify-content-between align-items-center">
+                            Immediate Get*
+                            <span id="pill-immget" class="badge rounded-pill bg-secondary">Unknown</span>
                         </li>
                         <li id="ror" class="list-group-item d-flex justify-content-between align-items-center">
                             <a href="https://passkeys.dev/docs/advanced/related-origins/" target="_blank">
@@ -130,6 +135,11 @@
                     <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#extensions">
                         <div class="accordion-body">
                             <ul>
+                                <li id="extCmtgKey"
+                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                    Credential Manager Trust Group Key (cmtgKey)*
+                                    <span id="pill-extCmtgKey" class="badge rounded-pill bg-secondary">Unknown</span>
+                                </li>
                                 <li id="extCredProps"
                                     class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="https://www.w3.org/TR/webauthn-2/#sctn-authenticator-credential-properties-extension"
@@ -213,6 +223,9 @@
                     </div>
                 </div>
             </div>
+            <div class="alert alert-light text-center mt-3" role="alert">
+                Features with an asterisk (*) are currently in development, are not committed, and may change at any time.
+            </div>
             <div class="alert alert-primary text-center mt-3" role="alert">
                 This is a <strong>developer</strong> resource for WebAuthn Relying Parties and Clients.<br />
                 It is not intended to convey general support for passkeys for end users.
@@ -287,6 +300,9 @@
                         // Conditional Create
                         if (capabilities.hasOwnProperty('conditionalCreate')) capabilities.conditionalCreate ? updateStyle("condcreate", "s") : updateStyle("condcreate", "ns")
 
+                        // Immediate Get
+                        if (capabilities.hasOwnProperty('immediateGet')) capabilities.immediateGet ? updateStyle("immget", "s") : updateStyle("immget", "ns")
+
                         // Related Origins
                         if (capabilities.hasOwnProperty('relatedOrigins')) capabilities.relatedOrigins ? updateStyle("ror", "s") : updateStyle("ror", "ns")
 
@@ -312,6 +328,7 @@
                         if (capabilities.hasOwnProperty('extension:getCredBlob')) capabilities['extension:getCredBlob'] ? updateStyle("extGetCredBlob", "s") : updateStyle("extGetCredBlob", "ns")
                         if (capabilities.hasOwnProperty('extension:payment')) capabilities['extension:payment'] ? updateStyle("extPayment", "s") : updateStyle("extPayment", "ns")
                         if (capabilities.hasOwnProperty('extension:prf')) capabilities['extension:prf'] ? updateStyle("extPrf", "s") : updateStyle("extPrf", "ns")
+                        if (capabilities.hasOwnProperty('extension:cmtgKey')) capabilities['extension:cmtgKey'] ? updateStyle("extCmtgKey", "s") : updateStyle("extCmtgKey", "ns")
 
                     } catch (error) {
                         console.error("Error fetching client capabilities:", error);
@@ -350,6 +367,7 @@
 
             } else {
                 document.getElementById("list").style.display = "none";
+                document.getElementById("extensions").style.display = "none";
                 document.getElementById("nowebauthn").style.display = "block";
             }
         };
