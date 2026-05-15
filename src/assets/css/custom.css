@@ -18,8 +18,95 @@ body {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
+[data-bs-theme="dark"] .hover-lift:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important;
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--bs-body-color);
+  --bs-btn-border-color: var(--bs-border-color);
+  --bs-btn-hover-bg: var(--bs-secondary);
+  --bs-btn-hover-border-color: var(--bs-secondary);
+  --bs-btn-active-bg: var(--bs-secondary);
+  --bs-btn-active-border-color: var(--bs-secondary);
+}
+
 @media (min-width: 768px) {
   .border-start-md {
-    border-left: 1px solid #dee2e6 !important;
+    border-left: 1px solid var(--bs-border-color) !important;
   }
 }
+
+[data-bs-theme="dark"] .list-group-item-success {
+  background-color: rgba(25, 135, 84, 0.25) !important;
+  color: #acecc7 !important;
+}
+
+[data-bs-theme="dark"] .list-group-item-danger {
+  background-color: rgba(220, 53, 69, 0.25) !important;
+  color: #f8d7da !important;
+}
+
+[data-bs-theme="dark"] .list-group-item-success a,
+[data-bs-theme="dark"] .list-group-item-danger a {
+  color: inherit !important;
+}
+
+
+/* CodeFlask Dark Mode Support */
+[data-bs-theme="dark"] .codeflask {
+  background: var(--bs-body-bg) !important;
+  color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .codeflask__pre,
+[data-bs-theme="dark"] .codeflask__flatten {
+  color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .codeflask__textarea {
+  background: transparent !important;
+  color: transparent !important;
+  caret-color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .codeflask .token.string {
+  color: #a5d6ff !important;
+}
+
+[data-bs-theme="dark"] .codeflask .token.property {
+  color: #79c0ff !important;
+}
+
+[data-bs-theme="dark"] .codeflask .token.punctuation {
+  color: #d1d7dd !important;
+}
+
+[data-bs-theme="dark"] .codeflask .token.number,
+[data-bs-theme="dark"] .codeflask .token.boolean {
+  color: #ff7b72 !important;
+}
+
+[data-bs-theme="dark"] .codeflask__lines {
+  background: #161b22 !important;
+  border-right: 1px solid var(--bs-border-color) !important;
+  color: #ffffff !important;
+}
+
+/* CodeFlask Placeholder support */
+[data-bs-theme="dark"] .codeflask__textarea::placeholder {
+  color: #ffffff !important;
+  opacity: 0.6;
+}
+
+[data-bs-theme="dark"] .codeflask__textarea:-ms-input-placeholder {
+  color: #ffffff !important;
+  opacity: 0.6;
+}
+
+[data-bs-theme="dark"] .codeflask__textarea::-ms-input-placeholder {
+  color: #ffffff !important;
+  opacity: 0.6;
+}
+
+

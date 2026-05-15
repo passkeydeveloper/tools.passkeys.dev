@@ -17,9 +17,9 @@ export function log(opts) {
 
   const line = document.createElement('div');
   let colorClass = "text-body";
-  if (type === "warn") colorClass = "text-warning";
-  if (type === "error") colorClass = "text-danger";
-  if (type === "success") colorClass = "text-success";
+  if (type === "warn") colorClass = "text-warning-emphasis";
+  if (type === "error") colorClass = "text-danger-emphasis";
+  if (type === "success") colorClass = "text-success-emphasis";
 
   line.className = `mb-1 ${colorClass}`;
   line.innerText = message;

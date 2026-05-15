@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary border-bottom mb-4">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center me-4" href="/">
             <img src="/assets/img/pdd-icon-color-simple.svg" alt="Logo" width="40" height="40" class="me-2 rounded-2">
-            <span class="fw-bold text-dark">Passkey Developer Tools</span>
+            <span class="fw-bold">Passkey Developer Tools</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +24,49 @@
                         Related Origin Requests Validator
                     </a></li>
                 </ul>
+            </div>
+            <div class="ms-auto d-flex align-items-center ps-3">
+                <style>
+                    .theme-toggle-group {
+                        background: var(--bs-secondary-bg);
+                        padding: 2px;
+                        border-radius: 50px;
+                        display: flex;
+                        gap: 2px;
+                    }
+                    .theme-toggle-btn {
+                        border: none;
+                        background: none;
+                        width: 22px;
+                        height: 22px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: var(--bs-secondary-color);
+                        transition: all 0.2s ease;
+                        padding: 0;
+                        font-size: 0.75rem;
+                    }
+                    .theme-toggle-btn:hover {
+                        color: var(--bs-body-color);
+                    }
+                    .theme-toggle-btn.active {
+                        background: var(--bs-primary);
+                        color: white !important;
+                    }
+                </style>
+                <div class="theme-toggle-group" role="group" aria-label="Theme toggle">
+                    <button class="theme-toggle-btn" data-bs-theme-value="light" title="Light mode">
+                        <i class="bi bi-sun-fill"></i>
+                    </button>
+                    <button class="theme-toggle-btn" data-bs-theme-value="auto" title="Follow system">
+                        <i class="bi bi-circle-half"></i>
+                    </button>
+                    <button class="theme-toggle-btn" data-bs-theme-value="dark" title="Dark mode">
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
