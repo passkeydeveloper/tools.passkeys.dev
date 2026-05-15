@@ -203,10 +203,17 @@ extra_scripts:
 </div>
 
 <script>
-    const uap = new UAParser();
-    const result = uap.getResult();
-    const friendlyName = `${result.browser.name} ${result.browser.major}` || "Unknown Client";
-    document.getElementById("clientShortName").textContent = friendlyName;
+    window.addEventListener('DOMContentLoaded', () => {
+        try {
+            const uap = new UAParser();
+            const result = uap.getResult();
+            const friendlyName = `${result.browser.name} ${result.browser.major}` || "Unknown Client";
+            document.getElementById("clientShortName").textContent = friendlyName;
+        } catch (e) {
+            console.error("UA Parser error:", e);
+            document.getElementById("clientShortName").textContent = "Unknown Client";
+        }
+    });
 
     function updateStyle(id, type) {
         var pillElement = document.getElementById(`pill-${id}`);
