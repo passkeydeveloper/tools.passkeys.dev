@@ -21,7 +21,7 @@ npm install
 To run the development server with live reload:
 
 ```bash
-npx @11ty/eleventy --serve
+npm run dev
 ```
 
 ### Building for Production
@@ -29,7 +29,7 @@ npx @11ty/eleventy --serve
 To generate the static site in the `public/` directory:
 
 ```bash
-npx @11ty/eleventy
+npm run build
 ```
 
 ## Structure
