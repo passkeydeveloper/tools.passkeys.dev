@@ -1,0 +1,8 @@
+{
+  "siteName": "Passkey Developer Tools",
+  "url": "https://tools.passkeys.dev",
+  "description": "A collection of developer tools for passkeys and WebAuthn!",
+  "author": "Passkey Developer",
+  "socialImage": "/assets/img/social-card.png",
+  "language": "en"
+}

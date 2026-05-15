@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="{{ lang or metadata.language or 'en' }}" dir="{{ languages[lang].dir or 'ltr' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title or metadata.siteName }}</title>
+    <meta name="description" content="{{ description or metadata.description }}">
+
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="{{ title or metadata.siteName }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ metadata.url }}{{ page.url }}">
+    <meta property="og:site_name" content="{{ metadata.siteName }}">
+    <meta property="og:image" content="{{ metadata.url }}{{ metadata.socialImage }}">
+    <meta property="og:image:alt" content="{{ metadata.siteName }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="{{ metadata.twitter }}">
+    <meta name="twitter:title" content="{{ title or metadata.siteName }}">
+    <meta name="twitter:description" content="{{ description or metadata.description }}">
+    <meta name="twitter:image" content="{{ metadata.url }}{{ metadata.socialImage }}">
+
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+    <link rel="icon" href="/assets/img/favicon.ico" sizes="32x32">
+</head>
+<body class="d-flex flex-column h-100 bg-light">
+    {% if page.url != "/" %}
+        {% include "components/header.njk" %}
+    {% endif %}
+
+    <main class="flex-shrink-0 mb-3">
+        {{ content | safe }}
+    </main>
+
+    {% include "components/footer.njk" %}
+
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    {% if extra_scripts %}
+        {% for script in extra_scripts %}
+            <script src="{{ script }}"></script>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

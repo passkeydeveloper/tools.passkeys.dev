@@ -4,16 +4,41 @@ Developer tools for passkeys and WebAuthn
 
 ## Development
 
-This site just uses raw HTML and JS, no SSG or build tools.
-However, things like a sitemap need to get generated.
+This site is built using [Eleventy (11ty)](https://www.11ty.dev/).
 
-The following dependencies are required to work on tools.passkeys.dev locally:
+### Requirements
 
 - [Node.js 20.x+](https://nodejs.org/en/download)
 
-Once these are installed, enable pre-commit linting:
+### Installation
 
-1. In the project folder, run `git config core.hooksPath .git-hooks`
-2. Make the hook executable: `chmod a+x .git-hooks/pre-commit`
+```bash
+npm install
+```
 
-When you try to commit, the hook will check for staged HTML files and regenerate the sitemap if found.
+### Local Development
+
+To run the development server with live reload:
+
+```bash
+npx @11ty/eleventy --serve
+```
+
+### Building for Production
+
+To generate the static site in the `public/` directory:
+
+```bash
+npx @11ty/eleventy
+```
+
+## Structure
+
+- `src/`: Source files (Nunjucks templates, data, and tool logic).
+- `src/_includes/`: Shared layouts and components.
+- `src/_data/`: Global site metadata.
+- `public/`: The generated static site (output).
+
+## Sitemaps and SEO
+
+Sitemaps are automatically generated during the build process. SEO metadata (Open Graph, Twitter cards, etc.) is managed via the Eleventy data cascade and layouts. Overrides can be set in the Front Matter of individual pages.
