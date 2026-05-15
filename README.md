@@ -37,7 +37,7 @@ npx @11ty/eleventy
 - `src/`: Source files (Nunjucks templates, data, and tool logic).
 - `src/_includes/`: Shared layouts and components.
 - `src/_data/`: Global site metadata.
-- `public/`: The generated static site (output).
+- `_site_/`: The generated static site (output).
 
 ## Sitemaps and SEO
 
