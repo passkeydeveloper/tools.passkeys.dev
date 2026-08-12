@@ -109,4 +109,66 @@ body {
   opacity: 0.6;
 }
 
+/* Theme toggle (light/auto/dark) */
+.theme-toggle-group {
+  background: var(--bs-secondary-bg);
+  padding: 2px;
+  border-radius: 50px;
+  display: flex;
+  gap: 2px;
+}
+
+.theme-toggle-btn {
+  border: none;
+  background: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bs-secondary-color);
+  transition: all 0.2s ease;
+  padding: 0;
+  font-size: 0.75rem;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--bs-body-color);
+}
+
+.theme-toggle-btn.active {
+  background: var(--bs-primary);
+  color: white !important;
+}
+
+/* Homepage layout */
+.home-theme-toggle-row {
+  z-index: 1030;
+}
+
+.container-narrow {
+  max-width: 960px;
+}
+
+/* Footer */
+.footer-brand {
+  min-width: 0;
+}
+
+/* JSON editor / output panels (Response Decoder, Related Origins) */
+.json-editor {
+  height: 350px;
+  position: relative;
+}
+
+.log-output-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.parsed-json-scroll {
+  overflow-x: scroll;
+  font-size: 0.8em;
+}
 

@@ -10,7 +10,7 @@ extra_scripts:
         <h2 class="mt-1">WebAuthn Features <br />and Capability Detection<br />for Passkeys</h2>
     </div>
     <div>
-        <div id="nowebauthn" class="mt-5" style="display: none;">
+        <div id="nowebauthn" class="mt-5 d-none">
             <div class="alert alert-danger text-center" role="alert">
                 <h1>⚠️</h1>
                 <h2>WebAuthn is not supported in this browser</h2>
@@ -301,9 +301,9 @@ extra_scripts:
             typeof window.PublicKeyCredential.signalCurrentUserDetails === 'function' ? updateStyle("signalCud", "s") : updateStyle("signalCud", "ns");
             typeof window.PublicKeyCredential.signalUnknownCredential === 'function' ? updateStyle("signalUc", "s") : updateStyle("signalUc", "ns");
         } else {
-            document.getElementById("list").style.display = "none";
-            document.getElementById("extensions").style.display = "none";
-            document.getElementById("nowebauthn").style.display = "block";
+            document.getElementById("list").classList.add("d-none");
+            document.getElementById("extensions").classList.add("d-none");
+            document.getElementById("nowebauthn").classList.remove("d-none");
         }
     };
     checkClientFeatures();

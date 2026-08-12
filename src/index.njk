@@ -3,39 +3,9 @@ layout: layouts/base.njk
 title: Passkey Developer Tools
 description: A collection of developer tools for passkeys and WebAuthn!
 ---
-<div class="container-fluid" style="z-index: 1030;">
+<div class="container-fluid home-theme-toggle-row">
     <div class="row pt-3 pe-3 justify-content-end">
         <div class="col-auto">
-            <style>
-                .theme-toggle-group {
-                    background: var(--bs-secondary-bg);
-                    padding: 2px;
-                    border-radius: 50px;
-                    display: flex;
-                    gap: 2px;
-                }
-                .theme-toggle-btn {
-                    border: none;
-                    background: none;
-                    width: 22px;
-                    height: 22px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: var(--bs-secondary-color);
-                    transition: all 0.2s ease;
-                    padding: 0;
-                    font-size: 0.75rem;
-                }
-                .theme-toggle-btn:hover {
-                    color: var(--bs-body-color);
-                }
-                .theme-toggle-btn.active {
-                    background: var(--bs-primary);
-                    color: white !important;
-                }
-            </style>
             <div class="theme-toggle-group" role="group" aria-label="Theme toggle">
                 <button class="theme-toggle-btn" data-bs-theme-value="light" title="Light mode">
                     <i class="bi bi-sun-fill"></i>
@@ -50,7 +20,7 @@ description: A collection of developer tools for passkeys and WebAuthn!
         </div>
     </div>
 </div>
-<div class="container" style="max-width: 960px;">
+<div class="container container-narrow">
     <div class="text-center mt-2 mb-5 pt-0">
         <img src="/assets/img/pdd-icon-color-simple.svg" height="120px" alt="Passkeys.dev Icon" class="mb-3">
         <h1 class="display-4 fw-bold">Passkey Developer Tools</h1>
