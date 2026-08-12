@@ -34,9 +34,7 @@
     <script src="/assets/js/theme.js"></script>
 </head>
 <body class="d-flex flex-column h-100">
-    {% if page.url != "/" %}
-        {% include "components/header.njk" %}
-    {% endif %}
+    {% include "components/header.njk" %}
 
     <main class="flex-shrink-0 mb-3">
         {{ content | safe }}

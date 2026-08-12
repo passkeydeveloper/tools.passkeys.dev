@@ -143,10 +143,6 @@ body {
 }
 
 /* Homepage layout */
-.home-theme-toggle-row {
-  z-index: 1030;
-}
-
 .container-narrow {
   max-width: 960px;
 }
