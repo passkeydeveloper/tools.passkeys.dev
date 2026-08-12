@@ -8,7 +8,7 @@ import { encodeHex } from 'tiny-encodings';
  */
 export function aaguidToString(aaguid) {
   // Raw Hex: adce000235bcc60a648b0b25f1f05503
-  const hex = encodeHex(aaguid);
+  const hex = encodeHex(aaguid).toLowerCase();
 
   const segments = [
     hex.slice(0, 8), // 8
