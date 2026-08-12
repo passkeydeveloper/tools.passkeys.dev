@@ -25,15 +25,11 @@ extra_scripts:
         <code>navigator.credentials.get()</code>
         below.
         <code>ArrayBuffer</code> values should be encoded into base64url strings.
-        <span class="fw-bold">
-          (Hint: Try passing a WebAuthn API response into
-          <a href="https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredential/toJSON#examples" target="_blank">
-            <code>JSON.stringify()</code>
-          </a>
-          and then pasting the output below.)
-        </span>
-      </p>
-
+        </p>
+        <div class="alert alert-primary" role="alert">
+            💡 Hint: Pass a WebAuthn API response into <a href="https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredential/toJSON#examples" target="_blank">
+            <code>JSON.stringify()</code></a> and then pasting the output below.)
+        </div>
       <!-- JSON input -->
       <!-- deno-fmt-ignore -->
       <div
@@ -58,7 +54,7 @@ extra_scripts:
             indent="3"
             show-data-types="false"
             show-size="false"
-            theme='{"base00": "var(--bs-body-bg)","base01": "var(--bs-tertiary-bg)","base02": "var(--bs-border-color)","base03": "var(--bs-secondary-color)","base04": "var(--bs-secondary-color)","base05": "var(--bs-body-color)","base06": "var(--bs-body-color)","base07": "var(--bs-body-color)","base08": "#CC342B","base09": "#D63384","base0A": "#FBA922","base0B": "#198844","base0C": "#3971ED","base0D": "#FFBF3B","base0E": "#4F559C","base0F": "#3971ED"}'
+            theme='{"base00": "var(--bs-body-bg)","base01": "var(--bs-tertiary-bg)","base02": "var(--bs-border-color)","base03": "var(--bs-secondary-color)","base04": "var(--bs-secondary-color)","base05": "var(--bs-body-color)","base06": "var(--bs-body-color)","base07": "var(--bs-body-color)","base08": "var(--jv-literal)","base09": "var(--jv-string)","base0A": "var(--jv-regexp)","base0B": "var(--jv-number)","base0C": "var(--jv-number)","base0D": "var(--jv-accent)","base0E": "var(--jv-literal)","base0F": "var(--jv-number)"}'
           >
             {parsedOutput}
           </andypf-json-viewer>

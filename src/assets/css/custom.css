@@ -109,6 +109,23 @@ body {
   opacity: 0.6;
 }
 
+/* JSON Response Viewer syntax colors (VS Code Light+/Dark+ palette) */
+:root {
+  --jv-literal: #0000ff;
+  --jv-string: #a31515;
+  --jv-regexp: #811f3f;
+  --jv-number: #098658;
+  --jv-accent: #795e26;
+}
+
+[data-bs-theme="dark"] {
+  --jv-literal: #569cd6;
+  --jv-string: #ce9178;
+  --jv-regexp: #d16969;
+  --jv-number: #b5cea8;
+  --jv-accent: #dcdcaa;
+}
+
 /* Theme toggle (light/auto/dark) */
 .theme-toggle-group {
   background: var(--bs-secondary-bg);
