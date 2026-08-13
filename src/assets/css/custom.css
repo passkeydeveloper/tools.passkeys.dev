@@ -18,8 +18,170 @@ body {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
+[data-bs-theme="dark"] .hover-lift:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important;
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--bs-body-color);
+  --bs-btn-border-color: var(--bs-border-color);
+  --bs-btn-hover-bg: var(--bs-secondary);
+  --bs-btn-hover-border-color: var(--bs-secondary);
+  --bs-btn-active-bg: var(--bs-secondary);
+  --bs-btn-active-border-color: var(--bs-secondary);
+}
+
 @media (min-width: 768px) {
   .border-start-md {
-    border-left: 1px solid #dee2e6 !important;
+    border-left: 1px solid var(--bs-border-color) !important;
   }
 }
+
+[data-bs-theme="dark"] .list-group-item-success {
+  background-color: rgba(25, 135, 84, 0.25) !important;
+  color: #acecc7 !important;
+}
+
+[data-bs-theme="dark"] .list-group-item-danger {
+  background-color: rgba(220, 53, 69, 0.25) !important;
+  color: #f8d7da !important;
+}
+
+[data-bs-theme="dark"] .list-group-item-success a,
+[data-bs-theme="dark"] .list-group-item-danger a {
+  color: inherit !important;
+}
+
+
+/* CodeFlask Dark Mode Support */
+[data-bs-theme="dark"] .codeflask {
+  background: var(--bs-body-bg) !important;
+  color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .codeflask__pre,
+[data-bs-theme="dark"] .codeflask__flatten {
+  color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .codeflask__textarea {
+  background: transparent !important;
+  color: transparent !important;
+  caret-color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .codeflask .token.string {
+  color: #a5d6ff !important;
+}
+
+[data-bs-theme="dark"] .codeflask .token.property {
+  color: #79c0ff !important;
+}
+
+[data-bs-theme="dark"] .codeflask .token.punctuation {
+  color: #d1d7dd !important;
+}
+
+[data-bs-theme="dark"] .codeflask .token.number,
+[data-bs-theme="dark"] .codeflask .token.boolean {
+  color: #ff7b72 !important;
+}
+
+[data-bs-theme="dark"] .codeflask__lines {
+  background: #161b22 !important;
+  border-right: 1px solid var(--bs-border-color) !important;
+  color: #ffffff !important;
+}
+
+/* CodeFlask Placeholder support */
+[data-bs-theme="dark"] .codeflask__textarea::placeholder {
+  color: #ffffff !important;
+  opacity: 0.6;
+}
+
+[data-bs-theme="dark"] .codeflask__textarea:-ms-input-placeholder {
+  color: #ffffff !important;
+  opacity: 0.6;
+}
+
+[data-bs-theme="dark"] .codeflask__textarea::-ms-input-placeholder {
+  color: #ffffff !important;
+  opacity: 0.6;
+}
+
+/* JSON Response Viewer syntax colors (VS Code Light+/Dark+ palette) */
+:root {
+  --jv-literal: #0000ff;
+  --jv-string: #a31515;
+  --jv-regexp: #811f3f;
+  --jv-number: #098658;
+  --jv-accent: #795e26;
+}
+
+[data-bs-theme="dark"] {
+  --jv-literal: #569cd6;
+  --jv-string: #ce9178;
+  --jv-regexp: #d16969;
+  --jv-number: #b5cea8;
+  --jv-accent: #dcdcaa;
+}
+
+/* Theme toggle (light/auto/dark) */
+.theme-toggle-group {
+  background: var(--bs-secondary-bg);
+  padding: 2px;
+  border-radius: 50px;
+  display: flex;
+  gap: 2px;
+}
+
+.theme-toggle-btn {
+  border: none;
+  background: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bs-secondary-color);
+  transition: all 0.2s ease;
+  padding: 0;
+  font-size: 0.75rem;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--bs-body-color);
+}
+
+.theme-toggle-btn.active {
+  background: var(--bs-primary);
+  color: white !important;
+}
+
+/* Homepage layout */
+.container-narrow {
+  max-width: 960px;
+}
+
+/* Footer */
+.footer-brand {
+  min-width: 0;
+}
+
+/* JSON editor / output panels (Response Decoder, Related Origins) */
+.json-editor {
+  height: 350px;
+  position: relative;
+}
+
+.log-output-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.parsed-json-scroll {
+  overflow-x: scroll;
+  font-size: 0.8em;
+}
+
