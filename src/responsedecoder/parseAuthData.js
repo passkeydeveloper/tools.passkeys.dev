@@ -1,4 +1,4 @@
-import { decodeCBOR } from 'tiny-cbor';
+import { decodePartialCBOR } from 'tiny-cbor';
 import { encodeBase64Url, encodeHex } from 'tiny-encodings';
 
 import { aaguidToString } from './aaguidToString.js';
@@ -75,7 +75,7 @@ export function parseAuthData(authData) {
     credentialID = encodeBase64Url(credentialIDBuffer);
     credentialPublicKey = encodeBase64Url(buffer);
 
-    const pubKey = decodeCBOR(buffer);
+    const [pubKey] = decodePartialCBOR(buffer, 0);
 
     // TODO: Handle this differently if this is an RSA key
     parsedCredentialPublicKey = {
