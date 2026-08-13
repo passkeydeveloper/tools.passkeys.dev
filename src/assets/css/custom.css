@@ -127,6 +127,15 @@ body {
 }
 
 /* Theme toggle (light/auto/dark) */
+@media (min-width: 992px) {
+  .navbar-theme-toggle-wrapper {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
 .theme-toggle-group {
   background: var(--bs-secondary-bg);
   padding: 2px;
