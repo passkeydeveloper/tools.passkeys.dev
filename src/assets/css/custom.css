@@ -194,3 +194,12 @@ body {
   font-size: 0.8em;
 }
 
+.sample-data-chevron {
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+#sampleDataToggle[aria-expanded="true"] .sample-data-chevron {
+  transform: rotate(90deg);
+}
+

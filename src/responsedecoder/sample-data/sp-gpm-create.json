@@ -1,0 +1,18 @@
+{
+    "authenticatorAttachment": "platform",
+    "clientExtensionResults": {},
+    "id": "YfhsiVebSo9MoPQziCWzGw",
+    "rawId": "YfhsiVebSo9MoPQziCWzGw",
+    "response": {
+        "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YViUDGygg5w6VoNVeDP2GKJVZmXfKgiJZHh9U4ULStTTvtxdAAAAAOqbjWZNAR0hPOS2tIy1ddQAEGH4bIlXm0qPTKD0M4glsxulAQIDJiABIVgggSHzCpXj_3mdyt2Sk1IzLShiPIzXp8oPztFJufnl8z8iWCBBtJiI0pWSn_LQQPwv8A6i2IQbZzkQjxL3G898koF9TQ",
+        "authenticatorData": "DGygg5w6VoNVeDP2GKJVZmXfKgiJZHh9U4ULStTTvtxdAAAAAOqbjWZNAR0hPOS2tIy1ddQAEGH4bIlXm0qPTKD0M4glsxulAQIDJiABIVgggSHzCpXj_3mdyt2Sk1IzLShiPIzXp8oPztFJufnl8z8iWCBBtJiI0pWSn_LQQPwv8A6i2IQbZzkQjxL3G898koF9TQ",
+        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiVERnNVgzQlRhMmROVDFwbGFsVTNZalprUmkxbVZFcFhTRU5zU0hOdGRsTSIsIm9yaWdpbiI6Imh0dHBzOi8vbG9naW4uZXhhbXBsZS5jb20iLCJjcm9zc09yaWdpbiI6ZmFsc2V9",
+        "publicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEgSHzCpXj_3mdyt2Sk1IzLShiPIzXp8oPztFJufnl8z9BtJiI0pWSn_LQQPwv8A6i2IQbZzkQjxL3G898koF9TQ",
+        "publicKeyAlgorithm": -7,
+        "transports": [
+            "hybrid",
+            "internal"
+        ]
+    },
+    "type": "public-key"
+}

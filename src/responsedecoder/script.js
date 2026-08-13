@@ -15,6 +15,81 @@ const parsedOutputElem = document.getElementById('parsedOutput');
 const parsedTitleElem = document.getElementById('parsedTitle');
 const parsedJSONElem = document.getElementById('parsedJSON');
 
+// Map of type/ceremony/flow selections to sample data files.
+// Device-bound passkeys are only available via the "Security Key" flow, and
+// synced passkeys are only available via "Local Credential Manager" or
+// "Nearby Device" flows, so the "flow" options are filtered based on "type".
+const SAMPLE_DATA = {
+  'dbp|create|securitykey': 'dbp-yubikey-create.json',
+  'dbp|get|securitykey': 'dbp-yubikey-get.json',
+  'synced|create|localmanager': 'sp-gpm-create.json',
+  'synced|get|localmanager': 'sp-gpm-get.json',
+  'synced|create|nearby': 'sp-ap-create.json',
+  'synced|get|nearby': 'sp-ap-get.json',
+};
+
+const FLOWS_BY_TYPE = {
+  dbp: ['securitykey'],
+  synced: ['localmanager', 'nearby'],
+};
+
+const sampleTypeElem = document.getElementById('sampleType');
+const sampleCeremonyElem = document.getElementById('sampleCeremony');
+const sampleFlowElem = document.getElementById('sampleFlow');
+const loadSampleBtnElem = document.getElementById('loadSampleBtn');
+
+function getSampleKey() {
+  return `${sampleTypeElem.value}|${sampleCeremonyElem.value}|${sampleFlowElem.value}`;
+}
+
+function updateSampleControls() {
+  // Grey out flow options that aren't available for the selected type
+  const availableFlows = FLOWS_BY_TYPE[sampleTypeElem.value];
+  for (const option of sampleFlowElem.options) {
+    option.disabled = !availableFlows.includes(option.value);
+  }
+
+  // If the currently-selected flow just became unavailable, jump to the first available one
+  if (sampleFlowElem.options[sampleFlowElem.selectedIndex].disabled) {
+    sampleFlowElem.value = availableFlows[0];
+  }
+
+  loadSampleBtnElem.disabled = !(getSampleKey() in SAMPLE_DATA);
+}
+
+sampleTypeElem.addEventListener('change', updateSampleControls);
+sampleCeremonyElem.addEventListener('change', updateSampleControls);
+sampleFlowElem.addEventListener('change', updateSampleControls);
+updateSampleControls();
+
+loadSampleBtnElem.addEventListener('click', async () => {
+  const filename = SAMPLE_DATA[getSampleKey()];
+  if (!filename) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`./sample-data/${filename}`);
+    if (!response.ok) {
+      throw new Error(`Sample data file returned ${response.status}`);
+    }
+    const sampleText = await response.text();
+
+    // Load the raw text into the editor first so it's there to tweak even if
+    // it turns out not to be valid/parseable JSON
+    flask.updateCode(sampleText);
+
+    // Pretty-print it if possible, same as what happens on paste
+    try {
+      flask.updateCode(JSON.stringify(JSON.parse(sampleText), null, 2));
+    } catch (err) {
+      // Leave the raw text as-is
+    }
+  } catch (err) {
+    logError(`Couldn't load sample data (see console for more info): ${err}`);
+  }
+});
+
 // Set a placeholder to help communicate the shape of the JSON that should be pasted in
 flaskTextarea.placeholder = `{
   "id": "...",

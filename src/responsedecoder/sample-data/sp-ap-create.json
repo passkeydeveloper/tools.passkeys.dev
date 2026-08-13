@@ -1,0 +1,18 @@
+{
+    "authenticatorAttachment": "cross-platform",
+    "clientExtensionResults": {},
+    "id": "CcZEwgabQhOCVY0efeK5nXlJbSY",
+    "rawId": "CcZEwgabQhOCVY0efeK5nXlJbSY",
+    "response": {
+        "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YViYDGygg5w6VoNVeDP2GKJVZmXfKgiJZHh9U4ULStTTvtxdAAAAAPv8MAcVTk7MjAtuAgVX170AFAnGRMIGm0ITglWNHn3iuZ15SW0mpQECAyYgASFYIBGLZRQrC0F0cnDbu52WeRe47m1TLOr5nRuh7jYcQQ3_IlggEFc378a266Lk-3u7vpMt-6vy2xjRnWmY-kMdd3v-rtg",
+        "authenticatorData": "DGygg5w6VoNVeDP2GKJVZmXfKgiJZHh9U4ULStTTvtxdAAAAAPv8MAcVTk7MjAtuAgVX170AFAnGRMIGm0ITglWNHn3iuZ15SW0mpQECAyYgASFYIBGLZRQrC0F0cnDbu52WeRe47m1TLOr5nRuh7jYcQQ3_IlggEFc378a266Lk-3u7vpMt-6vy2xjRnWmY-kMdd3v-rtg",
+        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiYzBVMlMxZDBXRzFJVEdabVZXSk9ZMk5xUldGcmNFMVBaRTUyYlhNd1VEVSIsIm9yaWdpbiI6Imh0dHBzOi8vbG9naW4uZXhhbXBsZS5jb20iLCJjcm9zc09yaWdpbiI6ZmFsc2V9",
+        "publicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEEYtlFCsLQXRycNu7nZZ5F7jubVMs6vmdG6HuNhxBDf8QVzfvxrbrouT7e7u-ky37q_LbGNGdaZj6Qx13e_6u2A",
+        "publicKeyAlgorithm": -7,
+        "transports": [
+            "hybrid",
+            "internal"
+        ]
+    },
+    "type": "public-key"
+}

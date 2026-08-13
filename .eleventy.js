@@ -10,6 +10,7 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy("src/featuredetect/robots.txt");
     eleventyConfig.addPassthroughCopy("src/relatedorigins/script.js");
     eleventyConfig.addPassthroughCopy("src/responsedecoder/*.js");
+    eleventyConfig.addPassthroughCopy("src/responsedecoder/sample-data/*.json");
 
     // Plugins
     eleventyConfig.addPlugin(pluginSitemap, {

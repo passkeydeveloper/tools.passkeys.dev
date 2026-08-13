@@ -30,6 +30,54 @@ extra_scripts:
             💡 Hint: Pass a WebAuthn API response into <a href="https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredential/toJSON#examples" target="_blank">
             <code>JSON.stringify()</code></a> and then paste the output below.
         </div>
+
+      <!-- Sample data loader -->
+      <div class="mb-3">
+        <button
+          id="sampleDataToggle"
+          class="btn btn-link ps-0 text-decoration-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#sampleDataCollapse"
+          aria-expanded="false"
+          aria-controls="sampleDataCollapse"
+        >
+          <i class="bi bi-chevron-right sample-data-chevron"></i>
+          Load Sample Responses
+        </button>
+        <div class="collapse" id="sampleDataCollapse">
+          <div class="row g-2 align-items-end pt-1">
+            <div class="col-6 col-sm-3">
+              <label for="sampleType" class="form-label">Passkey Type</label>
+              <select id="sampleType" class="form-select form-select-sm">
+                <option value="dbp">Device-bound</option>
+                <option value="synced">Synced</option>
+              </select>
+            </div>
+            <div class="col-6 col-sm-3">
+              <label for="sampleCeremony" class="form-label">Ceremony</label>
+              <select id="sampleCeremony" class="form-select form-select-sm">
+                <option value="create">Create</option>
+                <option value="get">Get</option>
+              </select>
+            </div>
+            <div class="col-6 col-sm-3">
+              <label for="sampleFlow" class="form-label">Flow</label>
+              <select id="sampleFlow" class="form-select form-select-sm">
+                <option value="securitykey">Security Key</option>
+                <option value="localmanager">Local Credential Manager</option>
+                <option value="nearby">Nearby Device</option>
+              </select>
+            </div>
+            <div class="col-6 col-sm-3">
+              <button id="loadSampleBtn" type="button" class="btn btn-outline-secondary btn-sm w-100" disabled>
+                Load Sample
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- JSON input -->
       <!-- deno-fmt-ignore -->
       <div
