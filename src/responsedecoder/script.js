@@ -15,6 +15,17 @@ const parsedOutputElem = document.getElementById('parsedOutput');
 const parsedTitleElem = document.getElementById('parsedTitle');
 const parsedJSONElem = document.getElementById('parsedJSON');
 
+// andypf-json-viewer hides its per-row copy icon with `display: none` and
+// switches to `display: block` on hover, which inserts the icon's box into
+// the layout and shifts everything after it. Reserve the icon's space at all
+// times via `visibility` instead so hovering doesn't reflow the row.
+const copyIconLayoutFix = document.createElement('style');
+copyIconLayoutFix.textContent = `
+  .copy.icon { display: inline-block !important; visibility: hidden; }
+  .show-copy .key-value-wrapper:hover .icon.copy { visibility: visible; }
+`;
+parsedJSONElem.shadowRoot.appendChild(copyIconLayoutFix);
+
 // Map of type/ceremony/flow selections to sample data files.
 // Device-bound passkeys are only available via the "Security Key" flow, and
 // synced passkeys are only available via "Local Credential Manager" or
