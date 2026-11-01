@@ -8,7 +8,7 @@ This site is built using [Eleventy (11ty)](https://www.11ty.dev/).
 
 ### Requirements
 
-- [Node.js 20.x+](https://nodejs.org/en/download)
+- [Node.js 24.x+](https://nodejs.org/en/download) (a [mise](https://mise.jdx.dev) config pinning it is included, so `mise install` works)
 
 ### Installation
 
