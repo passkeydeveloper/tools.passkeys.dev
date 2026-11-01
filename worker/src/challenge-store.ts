@@ -10,8 +10,8 @@ export class ChallengeStore extends DurableObject {
     await this.ctx.storage.setAlarm(Date.now() + ttlMs);
   }
 
-  async take<T>(): Promise<T | undefined> {
-    const options = await this.ctx.storage.get<T>('options');
+  async take(): Promise<unknown> {
+    const options = await this.ctx.storage.get('options');
     await this.ctx.storage.deleteAll();
     await this.ctx.storage.deleteAlarm();
     return options;
