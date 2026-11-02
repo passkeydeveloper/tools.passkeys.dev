@@ -3,7 +3,7 @@ import { cloudflareTest, readD1Migrations } from '@cloudflare/vitest-pool-worker
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig(async () => {
-  const migrations = await readD1Migrations(path.join(import.meta.dirname, 'migrations'));
+  const migrations = await readD1Migrations(path.join(import.meta.dirname, 'api/migrations'));
 
   return {
     plugins: [
@@ -24,6 +24,9 @@ export default defineConfig(async () => {
         },
       }),
     ],
-    test: { setupFiles: ['./test/setup.ts'] },
+    test: {
+      include: ['api/test/**/*.test.ts'],
+      setupFiles: ['./api/test/setup.ts'],
+    },
   };
 });

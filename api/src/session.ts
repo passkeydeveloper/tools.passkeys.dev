@@ -64,5 +64,5 @@ export const sessionMiddleware: MiddlewareHandler<AppEnv> = async (c, next) => {
     await commitSession(c, { sid: crypto.randomUUID() });
   }
 
-  await next();
+  return next();
 };

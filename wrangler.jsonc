@@ -1,10 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "tools-passkeys-dev",
-  "main": "src/index.ts",
+  "main": "api/src/index.ts",
   "compatibility_date": "2026-10-01",
   "assets": {
-    "directory": "../_site",
+    "directory": "_site",
     "run_worker_first": ["/api/*", "/.well-known/*"]
   },
   "durable_objects": {
@@ -15,7 +15,7 @@
       "binding": "DB",
       "database_name": "tools-passkeys-dev",
       "database_id": "local-dev-placeholder",
-      "migrations_dir": "migrations"
+      "migrations_dir": "api/migrations"
     }
   ],
   "triggers": { "crons": ["0 * * * *"] },

@@ -4,7 +4,8 @@ const ZERO_AAGUID = '00000000-0000-0000-0000-000000000000';
 
 /**
  * Map an AAGUID to a human-friendly provider name, or `null` when it can't be determined.
- * Regenerate the data with `scripts/extract-aaguids.mjs`.
+ * The data in `aaguids.json` was ingested from webauthn.io and is a stopgap until a better source
+ * replaces it.
  */
 export function getProviderName(aaguid: string, deviceType: 'singleDevice' | 'multiDevice'): string | null {
   const name = (aaguidNames as Record<string, string>)[aaguid];
