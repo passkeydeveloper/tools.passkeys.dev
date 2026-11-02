@@ -8,6 +8,8 @@ export interface Env {
   RP_NAME: string;
   /** Comma-separated list of origins WebAuthn responses may come from */
   EXPECTED_ORIGINS: string;
+  /** Origins allowed to use the RP ID via Related Origin Requests; served at /.well-known/webauthn */
+  RELATED_ORIGINS?: string;
   /** Apple Team ID and bundle ID for /.well-known/apple-app-site-association */
   AASA_APP_ID_PREFIX?: string;
   AASA_BUNDLE_ID?: string;

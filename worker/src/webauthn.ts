@@ -26,8 +26,13 @@ export const CHALLENGE_TTL_MS = TIMEOUT_MS * 2;
 
 export class UnsupportedAlgorithmError extends Error {}
 
+export function parseOrigins(value: string | undefined): string[] {
+  return (value ?? '').split(',').map((origin) => origin.trim()).filter(Boolean);
+}
+
+/** Related origins are allowed to complete ceremonies for this RP ID too */
 export function expectedOrigins(env: Env): string[] {
-  return env.EXPECTED_ORIGINS.split(',').map((origin) => origin.trim()).filter(Boolean);
+  return [...new Set([...parseOrigins(env.EXPECTED_ORIGINS), ...parseOrigins(env.RELATED_ORIGINS)])];
 }
 
 export interface StoredRegistrationOptions {

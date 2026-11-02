@@ -24,6 +24,7 @@ import { clearSession, commitSession, sessionMiddleware } from './session';
 import {
   CHALLENGE_TTL_MS,
   UnsupportedAlgorithmError,
+  parseOrigins,
   buildAuthenticationOptions,
   buildRegistrationOptions,
   verifyAuthentication,
@@ -54,6 +55,14 @@ root.get('/.well-known/apple-app-site-association', (c) => {
 
   // https://developer.apple.com/documentation/authenticationservices/connecting_to_a_service_with_passkeys
   return c.json({ webcredentials: { apps: [`${AASA_APP_ID_PREFIX}.${AASA_BUNDLE_ID}`] } });
+});
+
+// https://w3c.github.io/webauthn/#sctn-related-origins
+root.get('/.well-known/webauthn', (c) => {
+  const origins = parseOrigins(c.env.RELATED_ORIGINS);
+  if (origins.length === 0) return c.notFound();
+
+  return c.json({ origins });
 });
 
 // Anything else under /.well-known is a plain static file
