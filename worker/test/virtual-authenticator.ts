@@ -34,7 +34,7 @@ export class VirtualAuthenticator {
     private origin = 'https://example.com',
   ) {}
 
-  async register(options: { challenge: string }, { uv = false, rk = true } = {}) {
+  async register(options: { challenge: string }, { uv = false, rk = true, synced = false } = {}) {
     this.#keyPair = (await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, [
       'sign',
       'verify',
@@ -54,7 +54,7 @@ export class VirtualAuthenticator {
     const credIdLength = new Uint8Array([0, this.credentialId.length]);
     const authData = concat(
       await sha256(encoder.encode(this.rpId)),
-      new Uint8Array([0x41 | (uv ? 0x04 : 0)]),
+      new Uint8Array([0x41 | (uv ? 0x04 : 0) | (synced ? 0x18 : 0)]),
       new Uint8Array(4),
       new Uint8Array(16),
       credIdLength,

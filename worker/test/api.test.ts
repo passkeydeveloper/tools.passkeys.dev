@@ -199,3 +199,58 @@ describe('credentials', () => {
     expect((await client()('/session')).json.username).toBeNull();
   });
 });
+
+describe('credential details', () => {
+  async function loginWith(authenticator: VirtualAuthenticator, registrationOptions = {}) {
+    const api = client();
+    const { json: options } = await api('/registration/options', { body: registrationRequest });
+    const response = await authenticator.register(options, registrationOptions);
+    await api('/registration/verification', { body: { username: 'alice', response } });
+
+    const { json: authOptions } = await api('/authentication/options', { body: authenticationRequest });
+    await api('/authentication/verification', { body: { response: await authenticator.authenticate(authOptions) } });
+    return api;
+  }
+
+  it('describes the public key', async () => {
+    const api = await loginWith(new VirtualAuthenticator());
+    const { json } = await api('/credentials');
+    expect(json.credentials[0].publicKey).toEqual({
+      kty: { id: 2, name: 'EC2' },
+      alg: { id: -7, name: 'ES256' },
+    });
+  });
+
+  it('names synced credentials with an all-zero AAGUID as iCloud Keychain', async () => {
+    const api = await loginWith(new VirtualAuthenticator(), { synced: true });
+    const { json } = await api('/credentials');
+    expect(json.credentials[0]).toMatchObject({ deviceType: 'multiDevice', backedUp: true, providerName: 'iCloud Keychain' });
+  });
+
+  it('has no provider name for unrecognized device-bound credentials', async () => {
+    const api = await loginWith(new VirtualAuthenticator());
+    const { json } = await api('/credentials');
+    expect(json.credentials[0]).toMatchObject({ deviceType: 'singleDevice', providerName: null });
+  });
+});
+
+describe('well-known', () => {
+  it('serves the Apple app site association', async () => {
+    const res = await SELF.fetch('https://example.com/.well-known/apple-app-site-association');
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ webcredentials: { apps: ['TEAMID1234.com.example.app'] } });
+  });
+
+  it('serves related origins', async () => {
+    const res = await SELF.fetch('https://example.com/.well-known/webauthn');
+    expect(await res.json()).toEqual({ origins: ['https://related.example'] });
+  });
+
+  it('accepts ceremonies from related origins', async () => {
+    const api = client();
+    const { json: options } = await api('/registration/options', { body: registrationRequest });
+    const response = await new VirtualAuthenticator('example.com', 'https://related.example').register(options);
+    const result = await api('/registration/verification', { body: { username: 'alice', response } });
+    expect(result.status).toBe(200);
+  });
+});
