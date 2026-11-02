@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 import type { Context } from 'hono';
 import { ZodError, type ZodType } from 'zod';
 import { getProviderName } from './aaguids';
@@ -24,6 +25,7 @@ import { clearSession, commitSession, sessionMiddleware } from './session';
 import {
   CHALLENGE_TTL_MS,
   UnsupportedAlgorithmError,
+  expectedOrigins,
   parseOrigins,
   buildAuthenticationOptions,
   buildRegistrationOptions,
@@ -39,6 +41,18 @@ const CREDENTIAL_LIFETIME_MS = 24 * 60 * 60 * 1000;
 
 const root = new Hono<AppEnv>();
 const app = root.basePath('/api/v1');
+
+// Only the origins that may run ceremonies against this RP ID can call the API cross-origin
+// (e.g. the Eleventy dev server on :8080 talking to `wrangler dev` on :8787)
+app.use(
+  '*',
+  cors({
+    origin: (origin, c) => (expectedOrigins(c.env).includes(origin) ? origin : null),
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type'],
+  }),
+);
 
 app.use('*', sessionMiddleware);
 

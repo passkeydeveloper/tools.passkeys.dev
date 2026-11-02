@@ -24,6 +24,6 @@
   "vars": {
     "RP_ID": "localhost",
     "RP_NAME": "tools.passkeys.dev",
-    "EXPECTED_ORIGINS": "http://localhost:8787"
+    "EXPECTED_ORIGINS": "http://localhost:8787,http://localhost:8080"
   }
 }

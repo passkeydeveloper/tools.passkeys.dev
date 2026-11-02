@@ -254,3 +254,35 @@ describe('well-known', () => {
     expect(result.status).toBe(200);
   });
 });
+
+describe('static fallback', () => {
+  it('passes unrecognized .well-known paths to static assets instead of erroring', async () => {
+    const res = await SELF.fetch('https://example.com/.well-known/does-not-exist');
+    expect(res.status).toBe(404);
+  });
+});
+
+describe('CORS', () => {
+  const url = 'https://example.com/api/v1/registration/options';
+
+  it('answers preflights from allowed origins with credentials', async () => {
+    const res = await SELF.fetch(url, {
+      method: 'OPTIONS',
+      headers: {
+        origin: 'https://related.example',
+        'access-control-request-method': 'POST',
+        'access-control-request-headers': 'content-type',
+      },
+    });
+    expect(res.status).toBe(204);
+    expect(res.headers.get('access-control-allow-origin')).toBe('https://related.example');
+    expect(res.headers.get('access-control-allow-credentials')).toBe('true');
+  });
+
+  it('does not grant access to other origins', async () => {
+    const res = await SELF.fetch('https://example.com/api/v1/capabilities', {
+      headers: { origin: 'https://evil.example' },
+    });
+    expect(res.headers.get('access-control-allow-origin')).toBeNull();
+  });
+});

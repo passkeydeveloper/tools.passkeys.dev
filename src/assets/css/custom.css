@@ -203,3 +203,12 @@ body {
   transform: rotate(90deg);
 }
 
+
+/* Hide Alpine-controlled elements until Alpine has initialized */
+[x-cloak] {
+    display: none !important;
+}
+
+#advanced-settings-tips-tricks {
+    max-width: min(90vw, 40rem);
+}
