@@ -80,15 +80,17 @@
                                     </select>
                                 </div>
 
-                                <div class="col-12">
-                                    <p class="mb-1">Supported Public Key Algorithms<br>(most to least preferred)</p>
-                                    <ordered-checkbox-list id="reg-pubkey-algs-list"
-                                        x-init="initRegPubKeyAlgsList($el)"
-                                        @order-change="handleRegPubKeyAlgsOrderChange($event)"></ordered-checkbox-list>
-                                    <p class="mb-0 small text-body-secondary">
-                                        Order: <span x-text="formatListOrder(options.regPubKeyAlgs)"></span>
-                                    </p>
-                                </div>
+                                <template x-if="capabilitiesLoaded">
+                                    <div class="col-12">
+                                        <p class="mb-1">Supported Public Key Algorithms<br>(most to least preferred)</p>
+                                        <ordered-checkbox-list id="reg-pubkey-algs-list"
+                                            x-init="initRegPubKeyAlgsList($el)"
+                                            @order-change="handleRegPubKeyAlgsOrderChange($event)"></ordered-checkbox-list>
+                                        <p class="mb-0 small text-body-secondary">
+                                            Order: <span x-text="formatListOrder(options.regPubKeyAlgs)"></span>
+                                        </p>
+                                    </div>
+                                </template>
 
                                 <div class="col-12">
                                     <p class="mb-1">Registration Hints (most to least preferred)</p>

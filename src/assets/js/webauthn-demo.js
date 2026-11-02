@@ -64,7 +64,11 @@ document.addEventListener('alpine:init', () => {
                     algorithms.includes(alg)
                 );
             } catch (err) {
+                // Without capabilities every algorithm stays offered; the server still validates
                 console.error('Could not load server capabilities:', err);
+            } finally {
+                // The algorithm list renders once this is set so it starts out in the right state
+                this.capabilitiesLoaded = true;
             }
 
             // Read options from query params if set
@@ -93,6 +97,7 @@ document.addEventListener('alpine:init', () => {
         // Default state
         webauthnSupported: true,
         showAdvancedSettings: false,
+        capabilitiesLoaded: false,
         formAction: 'registration',
         options: {
             // Registration
