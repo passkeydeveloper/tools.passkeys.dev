@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import type { Context } from 'hono';
 import { ZodError, type ZodType } from 'zod';
+import { getProviderName } from './aaguids';
 import { supportedAlgorithms } from './algorithms';
 import { ChallengeStore } from './challenge-store';
 import {
@@ -12,6 +13,7 @@ import {
   updateSignCount,
 } from './credentials';
 import type { AppEnv, Env } from './env';
+import { describePublicKey } from './public-key';
 import {
   authenticationOptionsRequest,
   authenticationVerificationRequest,
@@ -180,7 +182,11 @@ app.get('/credentials', async (c) => {
   const credentials = await getCredentialsByUsername(c.env.DB, username);
   return c.json({
     username,
-    credentials: credentials.map(({ publicKey: _publicKey, ...cred }) => cred),
+    credentials: credentials.map(({ publicKey, ...cred }) => ({
+      ...cred,
+      providerName: getProviderName(cred.aaguid, cred.deviceType),
+      publicKey: describePublicKey(publicKey),
+    })),
   });
 });
 
