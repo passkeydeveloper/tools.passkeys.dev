@@ -34,16 +34,7 @@ npm run build
 
 ### API
 
-The "try out WebAuthn" API is a [Cloudflare Worker](https://developers.cloudflare.com/workers/) that also serves the built site as static assets. It uses D1 for credentials and a Durable Object for single-use challenges.
-
-```bash
-npm run build                                   # the Worker serves _site/
-echo "SESSION_SECRET=dev-only-secret" > .dev.vars
-npx wrangler d1 migrations apply DB --local     # first run only
-npm run dev:api                                 # http://localhost:8787
-```
-
-Run the API tests and typecheck with `npm test` and `npm run typecheck`.
+The "Try WebAuthn" demo on the homepage talks to a separate API project. When the site is served from `localhost` on any port other than 8787, the page calls the API at `http://localhost:8787`, so run the API locally alongside `npm run dev`. The API's own setup instructions live in its repository.
 
 ## Structure
 
@@ -51,10 +42,6 @@ Run the API tests and typecheck with `npm test` and `npm run typecheck`.
 - `src/_includes/`: Shared layouts and components.
 - `src/_data/`: Global site metadata.
 - `_site/`: The generated static site (output).
-- `api/src/`: Cloudflare Worker source (Hono routes under `/api/v1`).
-- `api/migrations/`: D1 schema migrations.
-- `api/test/`: API tests (Vitest, run inside the Workers runtime).
-- `wrangler.jsonc`: Worker, D1, and Durable Object configuration.
 
 ## Sitemaps and SEO
 

@@ -26,7 +26,6 @@ import {
   CHALLENGE_TTL_MS,
   UnsupportedAlgorithmError,
   expectedOrigins,
-  parseOrigins,
   buildAuthenticationOptions,
   buildRegistrationOptions,
   verifyAuthentication,
@@ -63,24 +62,6 @@ root.onError((err, c) => {
 
 root.notFound((c) => c.json({ error: 'Not found' }, 404));
 
-root.get('/.well-known/apple-app-site-association', (c) => {
-  const { AASA_APP_ID_PREFIX, AASA_BUNDLE_ID } = c.env;
-  if (!AASA_APP_ID_PREFIX || !AASA_BUNDLE_ID) return c.notFound();
-
-  // https://developer.apple.com/documentation/authenticationservices/connecting_to_a_service_with_passkeys
-  return c.json({ webcredentials: { apps: [`${AASA_APP_ID_PREFIX}.${AASA_BUNDLE_ID}`] } });
-});
-
-// https://w3c.github.io/webauthn/#sctn-related-origins
-root.get('/.well-known/webauthn', (c) => {
-  const origins = parseOrigins(c.env.RELATED_ORIGINS);
-  if (origins.length === 0) return c.notFound();
-
-  return c.json({ origins });
-});
-
-// Anything else under /.well-known is a plain static file
-root.all('/.well-known/*', (c) => c.env.ASSETS.fetch(c.req.raw));
 
 /** Parse and validate a JSON body, returning a 400 response on failure */
 async function parseBody<T>(c: Context<AppEnv>, schema: ZodType<T>): Promise<T | Response> {

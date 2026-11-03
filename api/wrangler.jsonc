@@ -1,13 +1,8 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "tools-passkeys-dev",
-  "main": "api/src/index.ts",
+  "main": "src/index.ts",
   "compatibility_date": "2026-10-01",
-  "assets": {
-    "directory": "_site",
-    "binding": "ASSETS",
-    "run_worker_first": ["/api/*", "/.well-known/*"]
-  },
   "durable_objects": {
     "bindings": [{ "name": "CHALLENGES", "class_name": "ChallengeStore" }]
   },
@@ -16,7 +11,7 @@
       "binding": "DB",
       "database_name": "tools-passkeys-dev",
       "database_id": "local-dev-placeholder",
-      "migrations_dir": "api/migrations"
+      "migrations_dir": "migrations"
     }
   ],
   "triggers": { "crons": ["0 * * * *"] },

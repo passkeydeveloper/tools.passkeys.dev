@@ -3,7 +3,7 @@ import { cloudflareTest, readD1Migrations } from '@cloudflare/vitest-pool-worker
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig(async () => {
-  const migrations = await readD1Migrations(path.join(import.meta.dirname, 'api/migrations'));
+  const migrations = await readD1Migrations(path.join(import.meta.dirname, 'migrations'));
 
   return {
     plugins: [
@@ -16,17 +16,14 @@ export default defineConfig(async () => {
             TEST_MIGRATIONS: migrations,
             SESSION_SECRET: 'test-secret',
             RP_ID: 'example.com',
-            EXPECTED_ORIGINS: 'https://example.com',
-            RELATED_ORIGINS: 'https://related.example',
-            AASA_APP_ID_PREFIX: 'TEAMID1234',
-            AASA_BUNDLE_ID: 'com.example.app',
+            EXPECTED_ORIGINS: 'https://example.com,https://other.example',
           },
         },
       }),
     ],
     test: {
-      include: ['api/test/**/*.test.ts'],
-      setupFiles: ['./api/test/setup.ts'],
+      include: ['test/**/*.test.ts'],
+      setupFiles: ['./test/setup.ts'],
     },
   };
 });

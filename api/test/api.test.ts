@@ -234,31 +234,21 @@ describe('credential details', () => {
   });
 });
 
-describe('well-known', () => {
-  it('serves the Apple app site association', async () => {
-    const res = await SELF.fetch('https://example.com/.well-known/apple-app-site-association');
-    expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ webcredentials: { apps: ['TEAMID1234.com.example.app'] } });
-  });
-
-  it('serves related origins', async () => {
-    const res = await SELF.fetch('https://example.com/.well-known/webauthn');
-    expect(await res.json()).toEqual({ origins: ['https://related.example'] });
-  });
-
-  it('accepts ceremonies from related origins', async () => {
+describe('origins', () => {
+  it('accepts ceremonies from any expected origin', async () => {
     const api = client();
     const { json: options } = await api('/registration/options', { body: registrationRequest });
-    const response = await new VirtualAuthenticator('example.com', 'https://related.example').register(options);
+    const response = await new VirtualAuthenticator('example.com', 'https://other.example').register(options);
     const result = await api('/registration/verification', { body: { username: 'alice', response } });
     expect(result.status).toBe(200);
   });
 });
 
-describe('static fallback', () => {
-  it('passes unrecognized .well-known paths to static assets instead of erroring', async () => {
-    const res = await SELF.fetch('https://example.com/.well-known/does-not-exist');
+describe('unknown routes', () => {
+  it('returns a JSON 404', async () => {
+    const res = await SELF.fetch('https://example.com/does-not-exist');
     expect(res.status).toBe(404);
+    expect(await res.json()).toEqual({ error: 'Not found' });
   });
 });
 
@@ -269,13 +259,13 @@ describe('CORS', () => {
     const res = await SELF.fetch(url, {
       method: 'OPTIONS',
       headers: {
-        origin: 'https://related.example',
+        origin: 'https://other.example',
         'access-control-request-method': 'POST',
         'access-control-request-headers': 'content-type',
       },
     });
     expect(res.status).toBe(204);
-    expect(res.headers.get('access-control-allow-origin')).toBe('https://related.example');
+    expect(res.headers.get('access-control-allow-origin')).toBe('https://other.example');
     expect(res.headers.get('access-control-allow-credentials')).toBe('true');
   });
 
