@@ -18,7 +18,7 @@ npm install
 
 ### Local Development
 
-To run the development server with live reload:
+To build the site and serve it, along with the API, at `http://localhost:8080` (see [API](#api) for setup):
 
 ```bash
 npm run dev
@@ -34,7 +34,15 @@ npm run build
 
 ### API
 
-The "Try WebAuthn" demo on the homepage talks to a separate API project. When the site is served from `localhost` on any port other than 8787, the page calls the API at `http://localhost:8787`, so run the API locally alongside `npm run dev`. The API's own setup instructions live in its repository.
+The "Try WebAuthn" demo on the homepage calls `/api/v1/*`, which is handled by a small Worker in `worker/`. It owns the session cookie and forwards each request over an RPC service binding (`WEBAUTHN`) to the `webauthnapi-passkeys-dev` Worker, which lives in its own repository. The rest of the site is served as static assets from `_site/`.
+
+To run it locally:
+
+1. In the API repository, run `npm run dev` (it uses port 8081, and its local dev registry connects the binding).
+2. Here, create a git-ignored `.dev.vars` with `SESSION_SECRET=<anything>`, `RP_ID=localhost` and `EXPECTED_ORIGINS=http://localhost:8080`.
+3. Run `npm run dev` to build the site and serve it with the API on `http://localhost:8080`. Run `npm run watch` in another terminal to rebuild when source files change.
+
+Before deploying, set the secret with `npx wrangler secret put SESSION_SECRET`, then run `npm run deploy`.
 
 ## Structure
 

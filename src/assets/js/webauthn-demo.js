@@ -5,12 +5,8 @@ const {
     browserSupportsWebAuthnAutofill,
 } = SimpleWebAuthnBrowser;
 
-// In local development the site is served by Eleventy on its own port, while the API (a separate
-// project) runs under `wrangler dev` on :8787. Everywhere else the API is expected on the same
-// origin as the site.
-const API_ORIGIN =
-    location.hostname === 'localhost' && location.port !== '8787' ? 'http://localhost:8787' : '';
-const API = `${API_ORIGIN}/api/v1`;
+// The API is served by the same Worker as the page, in development (`wrangler dev`) and production
+const API = '/api/v1';
 
 /**
  * Turn an API error body into something readable. Failures are either `{ error: string }` or a

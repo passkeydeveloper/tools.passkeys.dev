@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tools-passkeys-dev",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "observability": { "enabled": true },
+  // The Eleventy build. Only /api/* runs the Worker; everything else is served as static assets.
+  "assets": {
+    "directory": "_site",
+    "run_worker_first": ["/api/*"]
+  },
+  // Serves the site and /api/* together; the API Worker's `wrangler dev` uses 8081
+  "dev": { "port": 8080 },
+  // RPC to the WebAuthn API Worker (webauthnapi.passkeys.dev repo)
+  "services": [{ "binding": "WEBAUTHN", "service": "webauthnapi-passkeys-dev" }],
+  // RP_ID and EXPECTED_ORIGINS are overridden for local development in .dev.vars
+  "vars": {
+    "RP_ID": "tools.passkeys.dev",
+    "RP_NAME": "tools.passkeys.dev",
+    "EXPECTED_ORIGINS": "https://tools.passkeys.dev"
+  }
+}
