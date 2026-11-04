@@ -10,6 +10,7 @@
   // The Eleventy build. Only /api/* runs the Worker; everything else is served as static assets.
   "assets": {
     "directory": "_site",
+    "not_found_handling": "404-page",
     "run_worker_first": ["/api/*"]
   },
   // Serves the site and /api/* together; the API Worker's `wrangler dev` uses 8081
