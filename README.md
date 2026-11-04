@@ -44,6 +44,14 @@ To run it locally:
 
 Before deploying, set the secret with `npx wrangler secret put SESSION_SECRET`, then run `npm run deploy`.
 
+Preview versions are served from a `*.workers.dev` origin, which differs from `RP_ID` and `EXPECTED_ORIGINS`, so WebAuthn ceremonies there fail unless those vars are overridden for the preview.
+
+### Deployment
+
+The site is a Cloudflare Worker serving the built `_site/` directory as static assets (see `wrangler.jsonc`). It is not a Pages project. In Cloudflare, connect the repository under Workers & Pages as a Worker (Workers Builds) with build command `npm run build`, deploy command `npx wrangler deploy`, and non-production branch deploy command `npx wrangler versions upload`.
+
+To deploy by hand, run `npm run deploy`. `npm run preview` uploads a version without promoting it and prints its preview URL.
+
 ## Structure
 
 - `src/`: Source files (Nunjucks templates, data, and tool logic).

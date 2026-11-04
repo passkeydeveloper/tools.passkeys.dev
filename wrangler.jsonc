@@ -3,6 +3,9 @@
   "name": "tools-passkeys-dev",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
+  // Each version uploaded from a non-production branch gets a preview URL on workers.dev
+  "workers_dev": true,
+  "preview_urls": true,
   "observability": { "enabled": true },
   // The Eleventy build. Only /api/* runs the Worker; everything else is served as static assets.
   "assets": {

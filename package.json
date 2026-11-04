@@ -18,6 +18,7 @@
     "build": "npx @11ty/eleventy",
     "typecheck": "tsc --noEmit",
     "deploy": "npm run typecheck && npm run build && wrangler deploy",
+    "preview": "npm run typecheck && npm run build && wrangler versions upload",
     "watch": "npx @11ty/eleventy --watch"
   },
   "repository": {
