@@ -5,7 +5,8 @@
   "observability": { "enabled": true },
   // The Eleventy build, served as static assets
   "assets": {
-    "directory": "_site"
+    "directory": "_site",
+    "not_found_handling": "404-page"
   },
   // Each version uploaded from a non-production branch gets a preview URL on workers.dev
   "workers_dev": true,
