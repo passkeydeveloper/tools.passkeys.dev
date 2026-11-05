@@ -24,6 +24,12 @@ To build the site and serve it, along with the API, at `http://localhost:8080` (
 npm run dev
 ```
 
+Because of the Worker-based architecture of the site, pages must be rebuilt any time site content is updated. Run the following command locally in a separate terminal to enable seeing updated content after saving changes in the editor:
+
+```bash
+npm run build:watch
+```
+
 ### Building for Production
 
 To generate the static site in the `public/` directory:
