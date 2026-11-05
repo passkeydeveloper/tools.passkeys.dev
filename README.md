@@ -8,7 +8,7 @@ This site is built using [Eleventy (11ty)](https://www.11ty.dev/).
 
 ### Requirements
 
-- [Node.js 22.x+](https://nodejs.org/en/download)
+- [Node.js 24.x+](https://nodejs.org/en/download) (a [mise](https://mise.jdx.dev) config pinning it is included, so `mise install` works)
 
 ### Installation
 
@@ -18,10 +18,19 @@ npm install
 
 ### Local Development
 
-To run the development server with live reload:
+> [!IMPORTANT]
+> The **webauthnapi.passkeys.dev** worker is required for local development! Pull down [its repo and follow its Development instructions](https://github.com/passkeydeveloper/webauthnapi.passkeys.dev). Make sure this worker is running locally at http://localhost:8787 before continuing.
+
+To build the site and serve it, along with the API, at `http://localhost:8080` (see [API](#api) for setup):
 
 ```bash
 npm run dev
+```
+
+Because of the Worker-based architecture of the site, pages must be rebuilt any time site content is updated. Run the following command locally in a separate terminal to enable seeing updated content after saving changes in the editor:
+
+```bash
+npm run build:watch
 ```
 
 ### Building for Production
@@ -31,6 +40,20 @@ To generate the static site in the `public/` directory:
 ```bash
 npm run build
 ```
+
+### API
+
+The "Try WebAuthn" demo on the homepage calls `/api/v1/*`, which is handled by a small Worker in `worker/`. It owns the session cookie and forwards each request over an RPC service binding (`WEBAUTHN`) to the `webauthnapi-passkeys-dev` Worker, which lives in its own repository. The rest of the site is served as static assets from `_site/`.
+
+To run it locally:
+
+1. In the API repository, run `npm run dev` (it uses port 8081, and its local dev registry connects the binding).
+2. Here, create a git-ignored `.dev.vars` with `SESSION_SECRET=<anything>`, `RP_ID=localhost` and `EXPECTED_ORIGINS=http://localhost:8080`.
+3. Run `npm run dev` to build the site and serve it with the API on `http://localhost:8080`. Run `npm run watch` in another terminal to rebuild when source files change.
+
+Before deploying, set the secret with `npx wrangler secret put SESSION_SECRET`, then run `npm run deploy`.
+
+Preview versions are served from a `*-tools-passkeys-dev.passkeydeveloper.workers.dev` hostname. For those hostnames the Worker uses the hostname as the RP ID and `https://<hostname>` as the expected origin, so ceremonies complete there, with credentials kept separate from production. Everywhere else, `RP_ID` and `EXPECTED_ORIGINS` apply. Previews should use their own `SESSION_SECRET`.
 
 ### Deployment
 

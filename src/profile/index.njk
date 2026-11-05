@@ -1,0 +1,77 @@
+---
+layout: layouts/base.njk
+title: Your Passkeys | Passkey Developer Tools
+description: The passkeys registered for the signed-in demo user.
+eleventyExcludeFromCollections: true
+extra_scripts:
+  - /assets/js/profile.js
+  - /assets/js/alpinejs.3.17.5.min.js
+---
+<div class="container" style="max-width: 970px;" x-data="profile" x-cloak>
+    <template x-if="loading">
+        <p class="text-center text-body-secondary" role="status">Loading…</p>
+    </template>
+
+    <template x-if="!loading">
+        <div>
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                <div>
+                    <h1 class="fs-3 fw-bold mb-1">You're signed in!</h1>
+                    <p class="text-body-secondary mb-0">
+                        Passkeys for <strong x-text="username"></strong>. Credentials are deleted after 24 hours
+                        if unused, or 30 days after their last authentication.
+                    </p>
+                </div>
+                <button type="button" class="btn btn-primary" @click="logout()">Sign out</button>
+            </div>
+
+            <template x-if="errorText">
+                <div class="alert alert-danger" role="alert" x-text="errorText"></div>
+            </template>
+
+            <template x-if="credentials.length === 0">
+                <p class="text-body-secondary">No passkeys are registered for this user.</p>
+            </template>
+
+            <div class="row g-3 pb-5">
+                <template x-for="cred in credentials" :key="cred.id">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-light">
+                                <h2 class="fs-6 mb-0 font-monospace" x-text="truncateId(cred.id)" :title="cred.id"></h2>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <strong>Description</strong><br>
+                                    <span x-text="describe(cred)"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Transports</strong><br>
+                                    <span x-text="transportsToUIString(cred.transports)"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Provider</strong><br>
+                                    <span x-text="cred.providerName || '(Unavailable)'"></span><br>
+                                    <span class="text-body-secondary" style="font-size: 0.9rem;" x-text="cred.aaguid"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Public key</strong><br>
+                                    <strong>Type:</strong> <span x-text="`${cred.publicKey.kty.name} (${cred.publicKey.kty.id})`"></span>,
+                                    <strong>Algorithm:</strong> <span x-text="`${cred.publicKey.alg.name} (${cred.publicKey.alg.id})`"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Sign count</strong><br>
+                                    <span x-text="cred.signCount"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                        @click="remove(cred)">Delete</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </template>
+</div>
