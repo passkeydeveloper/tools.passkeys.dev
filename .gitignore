@@ -67,3 +67,5 @@ $RECYCLE.BIN/
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Linux,macOS,Windows
 node_modules
 _site
+
+.wrangler
