@@ -17,10 +17,18 @@
   "dev": { "port": 8080 },
   // RPC to the WebAuthn API Worker (webauthnapi.passkeys.dev repo)
   "services": [{ "binding": "WEBAUTHN", "service": "webauthnapi-passkeys-dev" }],
-  // RP_ID and EXPECTED_ORIGINS are overridden for local development in .dev.vars
+  // RP_ID and EXPECTED_ORIGINS are overridden for local development in .dev.vars, and on preview
+  // hostnames by the Worker itself (see `relyingParty()` in worker/index.ts)
   "vars": {
     "RP_ID": "tools.passkeys.dev",
     "RP_NAME": "tools.passkeys.dev",
     "EXPECTED_ORIGINS": "https://tools.passkeys.dev"
+  },
+  "previews": {
+    "vars": {
+      "EXPECTED_ORIGINS": "https://tools.passkeys.dev",
+      "RP_ID": "tools.passkeys.dev",
+      "RP_NAME": "tools.passkeys.dev"
+    }
   }
 }

@@ -12,7 +12,15 @@ interface Ctx {
   /** Set when the response should carry a new session cookie */
   commit: (session: Session) => void;
   api: WebAuthnApi;
+  rp: RelyingParty;
   params: string[];
+}
+
+interface RelyingParty {
+  id: string;
+  name: string;
+  /** Origins WebAuthn responses may come from; also allowed to call the API cross-origin */
+  origins: string[];
 }
 
 /** Turn an RPC result into the API's HTTP shape: the value, or `{ error }`/field errors with a 400 */
@@ -31,8 +39,27 @@ async function readBody(request: Request): Promise<Record<string, unknown> | Res
   }
 }
 
-function expectedOrigins(env: Env): string[] {
-  return env.EXPECTED_ORIGINS.split(',').map((o) => o.trim()).filter(Boolean);
+/**
+ * Version previews are served from `<version or branch>-tools-passkeys-dev.<account>.workers.dev`.
+ * Only this account can create names under its `workers.dev` subdomain, so an exact match on the
+ * whole hostname is enough to trust it.
+ */
+const PREVIEW_HOST = /^[a-z0-9-]+-tools-passkeys-dev\.passkeydeveloper\.workers\.dev$/;
+
+/**
+ * The relying party comes from the environment, except on a preview, which can't complete
+ * ceremonies for the production RP ID and so gets an RP ID and origin of its own
+ */
+function relyingParty(request: Request, env: Env): RelyingParty {
+  const { hostname } = new URL(request.url);
+  if (PREVIEW_HOST.test(hostname)) {
+    return { id: hostname, name: env.RP_NAME, origins: [`https://${hostname}`] };
+  }
+  return {
+    id: env.RP_ID,
+    name: env.RP_NAME,
+    origins: env.EXPECTED_ORIGINS.split(',').map((o) => o.trim()).filter(Boolean),
+  };
 }
 
 const routes: Array<[method: string, pattern: RegExp, handler: Handler]> = [
@@ -47,46 +74,46 @@ const routes: Array<[method: string, pattern: RegExp, handler: Handler]> = [
     return Response.json({ loggedOut: true });
   }],
 
-  ['POST', /^\/registration\/options$/, async ({ request, env, session, api }) => {
+  ['POST', /^\/registration\/options$/, async ({ request, rp, session, api }) => {
     const body = await readBody(request);
     if (body instanceof Response) return body;
     return respond(
       await api.createRegistrationOptions({
         ...body,
-        rpId: env.RP_ID,
-        rpName: env.RP_NAME,
+        rpId: rp.id,
+        rpName: rp.name,
         sessionId: session.sid,
       } as never),
     );
   }],
 
-  ['POST', /^\/registration\/verification$/, async ({ request, env, session, api }) => {
+  ['POST', /^\/registration\/verification$/, async ({ request, rp, session, api }) => {
     const body = await readBody(request);
     if (body instanceof Response) return body;
     const result = await api.verifyRegistrationResponse({
       ...body,
-      rpId: env.RP_ID,
-      expectedOrigins: expectedOrigins(env),
+      rpId: rp.id,
+      expectedOrigins: rp.origins,
       sessionId: session.sid,
     } as never);
     return result.ok ? Response.json({ verified: true }) : respond(result);
   }],
 
-  ['POST', /^\/authentication\/options$/, async ({ request, env, session, api }) => {
+  ['POST', /^\/authentication\/options$/, async ({ request, rp, session, api }) => {
     const body = await readBody(request);
     if (body instanceof Response) return body;
     return respond(
-      await api.createAuthenticationOptions({ ...body, rpId: env.RP_ID, sessionId: session.sid } as never),
+      await api.createAuthenticationOptions({ ...body, rpId: rp.id, sessionId: session.sid } as never),
     );
   }],
 
-  ['POST', /^\/authentication\/verification$/, async ({ request, env, session, api, commit }) => {
+  ['POST', /^\/authentication\/verification$/, async ({ request, rp, session, api, commit }) => {
     const body = await readBody(request);
     if (body instanceof Response) return body;
     const result = await api.verifyAuthenticationResponse({
       ...body,
-      rpId: env.RP_ID,
-      expectedOrigins: expectedOrigins(env),
+      rpId: rp.id,
+      expectedOrigins: rp.origins,
       sessionId: session.sid,
     } as never);
     if (!result.ok) return respond(result);
@@ -95,17 +122,17 @@ const routes: Array<[method: string, pattern: RegExp, handler: Handler]> = [
     return Response.json({ verified: true });
   }],
 
-  ['GET', /^\/credentials$/, async ({ env, session, api }) => {
+  ['GET', /^\/credentials$/, async ({ rp, session, api }) => {
     if (!session.username) return Response.json({ error: 'Not logged in' }, { status: 401 });
-    const result = await api.getCredentials({ rpId: env.RP_ID, username: session.username });
+    const result = await api.getCredentials({ rpId: rp.id, username: session.username });
     return result.ok ? Response.json({ username: session.username, credentials: result.value }) : respond(result);
   }],
 
-  ['DELETE', /^\/credentials\/([^/]+)$/, async ({ env, session, api, params }) => {
+  ['DELETE', /^\/credentials\/([^/]+)$/, async ({ rp, session, api, params }) => {
     if (!session.username) return Response.json({ error: 'Not logged in' }, { status: 401 });
     return respond(
       await api.deleteCredential({
-        rpId: env.RP_ID,
+        rpId: rp.id,
         username: session.username,
         id: decodeURIComponent(params[0]),
       }),
@@ -122,10 +149,10 @@ function cookieValue(request: Request, name: string): string | undefined {
 }
 
 /** Only origins that may run ceremonies against this RP ID can call the API cross-origin (local dev) */
-function corsHeaders(request: Request, env: Env): Headers {
+function corsHeaders(request: Request, rp: RelyingParty): Headers {
   const headers = new Headers({ Vary: 'Origin' });
   const origin = request.headers.get('Origin');
-  if (origin && expectedOrigins(env).includes(origin)) {
+  if (origin && rp.origins.includes(origin)) {
     headers.set('Access-Control-Allow-Origin', origin);
     headers.set('Access-Control-Allow-Credentials', 'true');
   }
@@ -135,7 +162,8 @@ function corsHeaders(request: Request, env: Env): Headers {
 async function handle(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   const path = url.pathname.slice('/api/v1'.length);
-  const cors = corsHeaders(request, env);
+  const rp = relyingParty(request, env);
+  const cors = corsHeaders(request, rp);
 
   if (request.method === 'OPTIONS') {
     cors.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
@@ -160,6 +188,7 @@ async function handle(request: Request, env: Env): Promise<Response> {
         env,
         session,
         api: env.WEBAUTHN,
+        rp,
         params: path.match(route[1])!.slice(1),
         commit: (s) => {
           newSession = s;

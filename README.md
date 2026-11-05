@@ -50,7 +50,7 @@ To run it locally:
 
 Before deploying, set the secret with `npx wrangler secret put SESSION_SECRET`, then run `npm run deploy`.
 
-Preview versions are served from a `*.workers.dev` origin, which differs from `RP_ID` and `EXPECTED_ORIGINS`, so WebAuthn ceremonies there fail unless those vars are overridden for the preview.
+Preview versions are served from a `*-tools-passkeys-dev.passkeydeveloper.workers.dev` hostname. For those hostnames the Worker uses the hostname as the RP ID and `https://<hostname>` as the expected origin, so ceremonies complete there, with credentials kept separate from production. Everywhere else, `RP_ID` and `EXPECTED_ORIGINS` apply. Previews should use their own `SESSION_SECRET`.
 
 ### Deployment
 
