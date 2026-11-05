@@ -373,7 +373,8 @@ document.addEventListener('alpine:init', () => {
                     username: this.username || undefined,
                     response: authResp,
                 });
-                this.showSuccessAlert('Success! You are authenticated.');
+                // Show the signed-in user's credentials
+                window.location.href = '/profile/';
             } catch (err) {
                 this.showErrorAlert(`Authentication failed: ${err.message}`);
             }
