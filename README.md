@@ -18,6 +18,9 @@ npm install
 
 ### Local Development
 
+> [!IMPORTANT]
+> The **webauthnapi.passkeys.dev** worker is required for local development! Pull down [its repo and follow its Development instructions](https://github.com/passkeydeveloper/webauthnapi.passkeys.dev). Make sure this worker is running locally at http://localhost:8787 before continuing.
+
 To build the site and serve it, along with the API, at `http://localhost:8080` (see [API](#api) for setup):
 
 ```bash
