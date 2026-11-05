@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/passkeydeveloper/tools.passkeys.dev/issues"
   },
-  "homepage": "https://github.com/passkeydeveloper/tools.passkeys.dev#readme"
+  "homepage": "https://github.com/passkeydeveloper/tools.passkeys.dev#readme",
+  "engines": {
+    "node": ">=22"
+  }
 }
