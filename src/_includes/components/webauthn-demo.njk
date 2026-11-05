@@ -1,8 +1,8 @@
 <section class="card mb-5" x-data="webauthnDemo" aria-labelledby="webauthn-demo-heading">
     <div class="card-body p-4">
-        <h2 id="webauthn-demo-heading" class="fs-4 fw-bold text-center mb-1">Try WebAuthn</h2>
+        <h2 id="webauthn-demo-heading" class="fs-4 fw-bold text-center mb-1">Passkey Demo</h2>
         <p class="text-body-secondary text-center small mb-4">
-            Register a passkey and authenticate with it. Registered credentials are deleted after 24 hours.
+            Register a passkey, and then authenticate with it.<br>Use Advanced Settings below to customize for your use case.
         </p>
 
         <template x-if="webauthnSupported">
@@ -10,7 +10,7 @@
                 <form @submit.prevent="handleSubmit()">
                     <div class="mb-3">
                         <label for="input-username" class="visually-hidden">Username</label>
-                        <input type="text" class="form-control form-control-lg" id="input-username"
+                        <input type="text" class="form-control form-control-md" id="input-username"
                             placeholder="example_username" x-model="username" autocomplete="username webauthn"
                             maxlength="64" @input.debounce="handleSaveUsername">
                     </div>
@@ -32,7 +32,7 @@
                 </form>
 
                 <div id="advanced-settings">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" @click="toggleDrawer()"
+                    <button type="button" class="btn btn-outline-secondary" @click="toggleDrawer()"
                         :aria-expanded="showAdvancedSettings" aria-controls="advanced-settings-drawer">
                         Advanced Settings
                     </button>
