@@ -4,6 +4,7 @@ import {
     startAuthentication,
     browserSupportsWebAuthnAutofill,
 } from './simplewebauthn-browser.14.0.0.esm.min.js';
+import generateRandomUsername from './random-username-gen.2.0.2.esm.js';
 
 // The API is served by the same Worker as the page, in development (`wrangler dev`) and production
 const API = '/api/v1';
@@ -305,8 +306,10 @@ document.addEventListener('alpine:init', () => {
             } = this.options;
 
             if (!this.username) {
-                this.showErrorAlert('Please enter a username to register');
-                return;
+                // The generator always prefixes its input and a separator; with no input, drop the
+                // leading separator
+                this.username = generateRandomUsername('').replace(/^-/, '');
+                this._saveUsername(this.username);
             }
 
             const registrationOptionsJSON = await postJSON('/registration/options', {
