@@ -159,6 +159,42 @@ function corsHeaders(request: Request, rp: RelyingParty): Headers {
   return headers;
 }
 
+/** Flatten an error, and its causes, into fields Workers Observability can index */
+function describeError(err: unknown, depth = 0): Record<string, unknown> {
+  if (!(err instanceof Error)) return { value: String(err) };
+  return {
+    name: err.name,
+    message: err.message,
+    stack: err.stack,
+    // Errors thrown over an RPC call from the WebAuthn API Worker carry this
+    remote: (err as { remote?: unknown }).remote,
+    cause: err.cause !== undefined && depth < 3 ? describeError(err.cause, depth + 1) : undefined,
+  };
+}
+
+/** Log a failure as one structured object, with enough request context to reproduce it */
+function logError(message: string, err: unknown, request: Request, env: Env, extra: Record<string, unknown> = {}) {
+  const url = new URL(request.url);
+  console.error(message, {
+    error: describeError(err),
+    request: {
+      method: request.method,
+      host: url.hostname,
+      path: url.pathname,
+      hasCookie: request.headers.has('Cookie'),
+      origin: request.headers.get('Origin'),
+      cfRay: request.headers.get('CF-Ray'),
+    },
+    // Whether bindings are present; never their values
+    config: {
+      hasSessionSecret: Boolean(env.SESSION_SECRET),
+      hasWebauthnBinding: Boolean(env.WEBAUTHN),
+      rpId: env.RP_ID,
+    },
+    ...extra,
+  });
+}
+
 async function handle(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   const path = url.pathname.slice('/api/v1'.length);
@@ -170,6 +206,9 @@ async function handle(request: Request, env: Env): Promise<Response> {
     cors.set('Access-Control-Allow-Headers', 'Content-Type');
     return new Response(null, { status: 204, headers: cors });
   }
+
+  // Without this, signing a session cookie fails with an opaque "Zero-length key" error
+  if (!env.SESSION_SECRET) throw new Error('SESSION_SECRET is not configured for this Worker version');
 
   // Every request has a session, so conditional UI (no username yet) still has an ID for its challenge
   const cookie = cookieValue(request, COOKIE_NAME);
@@ -195,7 +234,7 @@ async function handle(request: Request, env: Env): Promise<Response> {
         },
       });
     } catch (err) {
-      console.error(err);
+      logError('Route handler failed', err, request, env, { route: `${route[0]} ${route[1]}` });
       response = Response.json({ error: 'Internal server error' }, { status: 500 });
     }
   }
@@ -214,5 +253,13 @@ async function handle(request: Request, env: Env): Promise<Response> {
 
 export default {
   // Only /api/* reaches the Worker (see `run_worker_first`); everything else is static assets
-  fetch: handle,
+  async fetch(request, env) {
+    try {
+      return await handle(request, env);
+    } catch (err) {
+      // Failures outside a route handler, such as session handling
+      logError('Unhandled error', err, request, env);
+      return Response.json({ error: 'Internal server error' }, { status: 500 });
+    }
+  },
 } satisfies ExportedHandler<Env>;
