@@ -90,3 +90,14 @@ export async function mockApi(page: Page): Promise<MockApi> {
 
   return api;
 }
+
+/**
+ * Report conditional mediation as unavailable so the demo doesn't start conditional UI. The virtual
+ * authenticator approves every request, so once a passkey exists a page load would sign in (and
+ * navigate away) on its own, racing with whatever the test is doing.
+ */
+export async function disableConditionalUI(page: Page) {
+  await page.addInitScript(() => {
+    PublicKeyCredential.isConditionalMediationAvailable = async () => false;
+  });
+}

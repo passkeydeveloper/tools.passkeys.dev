@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { addVirtualAuthenticator, mockApi, type MockApi } from './helpers';
+import { addVirtualAuthenticator, disableConditionalUI, mockApi, type MockApi } from './helpers';
 
 const STORAGE_KEY = 'savedUsername';
 
@@ -8,6 +8,7 @@ let api: MockApi;
 test.beforeEach(async ({ page }) => {
   api = await mockApi(page);
   await addVirtualAuthenticator(page);
+  await disableConditionalUI(page);
   await page.goto('/');
   // The form only renders once WebAuthn support has been detected
   await expect(page.locator('#input-username')).toBeVisible();
