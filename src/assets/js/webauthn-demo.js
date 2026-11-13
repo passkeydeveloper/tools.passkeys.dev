@@ -1,9 +1,9 @@
-const {
+import {
     browserSupportsWebAuthn,
     startRegistration,
     startAuthentication,
     browserSupportsWebAuthnAutofill,
-} = SimpleWebAuthnBrowser;
+} from './simplewebauthn-browser.14.0.0.esm.min.js';
 
 // The API is served by the same Worker as the page, in development (`wrangler dev`) and production
 const API = '/api/v1';
