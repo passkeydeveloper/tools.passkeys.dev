@@ -24,7 +24,9 @@
     "RP_NAME": "tools.passkeys.dev",
     "EXPECTED_ORIGINS": "https://tools.passkeys.dev"
   },
+  // Previews don't inherit bindings or vars from the top level, so each has to be repeated here
   "previews": {
+    "services": [{ "binding": "WEBAUTHN", "service": "webauthnapi-passkeys-dev" }],
     "vars": {
       "EXPECTED_ORIGINS": "https://tools.passkeys.dev",
       "RP_ID": "tools.passkeys.dev",
