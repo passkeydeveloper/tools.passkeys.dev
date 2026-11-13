@@ -8,6 +8,9 @@ const {
 // The API is served by the same Worker as the page, in development (`wrangler dev`) and production
 const API = '/api/v1';
 
+// The API expires authentication challenges after 120 seconds; refresh with some margin
+const CONDITIONAL_REFRESH_MS = 100 * 1000;
+
 /**
  * Turn an API error body into something readable. Failures are either `{ error: string }` or a
  * map of field name to a list of messages.
@@ -52,6 +55,13 @@ document.addEventListener('alpine:init', () => {
                 return;
             }
 
+            // Read options from query params if set. This happens before anything is awaited so the
+            // ordered lists render with the restored selections
+            if (location.search) {
+                this.showAdvancedSettings = true;
+                this._readOptionsFromQuery(new URLSearchParams(location.search));
+            }
+
             // Only offer algorithms the server can actually verify
             try {
                 const resp = await fetch(`${API}/capabilities`, { credentials: 'include' });
@@ -66,12 +76,6 @@ document.addEventListener('alpine:init', () => {
             } finally {
                 // The algorithm list renders once this is set so it starts out in the right state
                 this.capabilitiesLoaded = true;
-            }
-
-            // Read options from query params if set
-            if (location.search) {
-                this.showAdvancedSettings = true;
-                this._readOptionsFromQuery(new URLSearchParams(location.search));
             }
 
             // Update query parameters when options change
@@ -182,7 +186,14 @@ document.addEventListener('alpine:init', () => {
                 if (this.formAction === 'register') {
                     await this._startRegistration();
                 } else {
-                    await this._startAuthentication(false);
+                    // Starting an explicit ceremony cancels any pending conditional one
+                    this._explicitAuthActive = true;
+                    try {
+                        await this._startAuthentication(false);
+                    } finally {
+                        this._explicitAuthActive = false;
+                        this._startConditionalUI();
+                    }
                 }
             } catch (err) {
                 this.showErrorAlert(err.message);
@@ -356,6 +367,11 @@ document.addEventListener('alpine:init', () => {
                 return;
             }
 
+            // An explicit attempt began while these options were loading; don't cancel it
+            if (startConditionalUI && this._explicitAuthActive) {
+                return;
+            }
+
             console.log('AUTHENTICATION OPTIONS');
             console.log(JSON.stringify(authenticationOptionsJSON, null, 2));
 
@@ -370,7 +386,8 @@ document.addEventListener('alpine:init', () => {
 
             try {
                 await postJSON('/authentication/verification', {
-                    username: this.username || undefined,
+                    // Undefined for conditional UI; otherwise the username the ceremony started with
+                    username,
                     response: authResp,
                 });
                 // Show the signed-in user's credentials
@@ -380,9 +397,25 @@ document.addEventListener('alpine:init', () => {
             }
         },
         async _startConditionalUI() {
+            clearTimeout(this._conditionalRefreshTimer);
+
             if (!(await browserSupportsWebAuthnAutofill())) {
                 return;
             }
+
+            // The API expires challenges, but a conditional request can stay pending indefinitely,
+            // so start over with a fresh challenge before that happens. Restarting aborts the
+            // pending request, so wait out any explicit attempt rather than cancelling it.
+            const scheduleRefresh = () => {
+                this._conditionalRefreshTimer = setTimeout(() => {
+                    if (this._explicitAuthActive) {
+                        scheduleRefresh();
+                    } else {
+                        this._startConditionalUI();
+                    }
+                }, CONDITIONAL_REFRESH_MS);
+            };
+            scheduleRefresh();
 
             try {
                 await this._startAuthentication(true);
