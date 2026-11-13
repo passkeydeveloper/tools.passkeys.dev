@@ -3,9 +3,9 @@ layout: layouts/base.njk
 title: Your Passkeys | Passkey Developer Tools
 description: The passkeys registered for the signed-in demo user.
 eleventyExcludeFromCollections: true
+alpine: true
 extra_scripts:
   - /assets/js/profile.js
-  - /assets/js/alpinejs.3.17.5.min.js
 ---
 <div class="container" style="max-width: 970px;" x-data="profile" x-cloak>
     <template x-if="loading">
