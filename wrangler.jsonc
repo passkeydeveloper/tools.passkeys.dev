@@ -1,14 +1,36 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "tools-passkeys-dev",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
-  "observability": { "enabled": true },
-  // The Eleventy build, served as static assets
-  "assets": {
-    "directory": "_site",
-    "not_found_handling": "404-page"
-  },
   // Each version uploaded from a non-production branch gets a preview URL on workers.dev
   "workers_dev": true,
-  "preview_urls": true
+  "preview_urls": true,
+  "observability": { "enabled": true },
+  // The Eleventy build. Only /api/* runs the Worker; everything else is served as static assets.
+  "assets": {
+    "directory": "_site",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  // Serves the site and /api/* together; the API Worker's `wrangler dev` uses 8081
+  "dev": { "port": 8080 },
+  // RPC to the WebAuthn API Worker (webauthnapi.passkeys.dev repo)
+  "services": [{ "binding": "WEBAUTHN", "service": "webauthnapi-passkeys-dev" }],
+  // RP_ID and EXPECTED_ORIGINS are overridden for local development in .dev.vars, and on preview
+  // hostnames by the Worker itself (see `relyingParty()` in worker/index.ts)
+  "vars": {
+    "RP_ID": "tools.passkeys.dev",
+    "RP_NAME": "tools.passkeys.dev",
+    "EXPECTED_ORIGINS": "https://tools.passkeys.dev"
+  },
+  // Previews don't inherit bindings or vars from the top level, so each has to be repeated here
+  "previews": {
+    "services": [{ "binding": "WEBAUTHN", "service": "webauthnapi-passkeys-dev" }],
+    "vars": {
+      "EXPECTED_ORIGINS": "https://tools.passkeys.dev",
+      "RP_ID": "tools.passkeys.dev",
+      "RP_NAME": "tools.passkeys.dev"
+    }
+  }
 }

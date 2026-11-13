@@ -1,0 +1,172 @@
+<section class="card mb-5" x-data="webauthnDemo" aria-labelledby="webauthn-demo-heading">
+    <div class="card-body p-4">
+        <h2 id="webauthn-demo-heading" class="fs-4 fw-bold text-center mb-1">Passkey Demo</h2>
+        <p class="text-body-secondary text-center small mb-4">
+            Register a passkey, and then authenticate with it.<br>Use Advanced Settings below to customize for your use case.
+        </p>
+
+        <template x-if="webauthnSupported">
+            <div>
+                <form @submit.prevent="handleSubmit()">
+                    <div class="mb-3">
+                        <label for="input-username" class="visually-hidden">Username</label>
+                        <input type="text" class="form-control form-control-md" id="input-username"
+                            placeholder="example_username" x-model="username" autocomplete="username webauthn"
+                            maxlength="64" @input.debounce="handleSaveUsername">
+                    </div>
+
+                    <template x-if="alert.show">
+                        <div :class="alert.alertClass" x-text="alert.text" role="status" aria-live="polite"></div>
+                    </template>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary w-100" type="submit" id="register-button"
+                                @click="handleClickRegister()">Register</button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary w-100" type="submit" id="login-button"
+                                @click="handleClickAuthenticate()">Authenticate</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="advanced-settings">
+                    <button type="button" class="btn btn-outline-secondary" @click="toggleDrawer()"
+                        :aria-expanded="showAdvancedSettings" aria-controls="advanced-settings-drawer">
+                        Advanced Settings
+                    </button>
+
+                    <div id="advanced-settings-drawer" class="card mt-3" x-cloak x-show="showAdvancedSettings">
+                        <div class="card-body">
+                            <p class="fw-semibold mb-2"><ins>Registration Settings</ins></p>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label for="optRegUserVerification" class="form-label">User Verification</label>
+                                    <select id="optRegUserVerification" class="form-select"
+                                        x-model="options.regUserVerification">
+                                        <template x-for="option in userVerificationOpts" :key="option.value">
+                                            <option :value="option.value" x-text="option.label"></option>
+                                        </template>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="attachment" class="form-label">Attachment</label>
+                                    <select id="attachment" class="form-select" x-model="options.attachment">
+                                        <template x-for="attachment in attachments" :key="attachment.value">
+                                            <option :value="attachment.value" x-text="attachment.label"></option>
+                                        </template>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-7">
+                                    <label for="discoverableCredential" class="form-label">Discoverable
+                                        Credential</label>
+                                    <select id="discoverableCredential" class="form-select"
+                                        x-model="options.discoverableCredential">
+                                        <template x-for="option in discoverableCredentialOpts" :key="option.value">
+                                            <option :value="option.value" x-text="option.label"></option>
+                                        </template>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label for="attestation" class="form-label">Attestation</label>
+                                    <select id="attestation" class="form-select" x-model="options.attestation">
+                                        <template x-for="attestation in attestations" :key="attestation.value">
+                                            <option :value="attestation.value" x-text="attestation.label"></option>
+                                        </template>
+                                    </select>
+                                </div>
+
+                                <template x-if="capabilitiesLoaded">
+                                    <div class="col-12">
+                                        <p class="mb-1">Supported Public Key Algorithms<br>(most to least preferred)</p>
+                                        <ordered-checkbox-list id="reg-pubkey-algs-list"
+                                            x-init="initRegPubKeyAlgsList($el)"
+                                            @order-change="handleRegPubKeyAlgsOrderChange($event)"></ordered-checkbox-list>
+                                        <p class="mb-0 small text-body-secondary">
+                                            Order: <span x-text="formatListOrder(options.regPubKeyAlgs)"></span>
+                                        </p>
+                                    </div>
+                                </template>
+
+                                <div class="col-12">
+                                    <p class="mb-1">Registration Hints (most to least preferred)</p>
+                                    <ordered-checkbox-list id="reg-hints-list" x-init="initRegHintsList($el)"
+                                        @order-change="handleRegHintsOrderChange($event)"></ordered-checkbox-list>
+                                    <p class="mb-0 small text-body-secondary">
+                                        Order: <span x-text="formatListOrder(options.regHints)"></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <p class="fw-semibold mb-2"><ins>Authentication Settings</ins></p>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label for="optAuthUserVerification" class="form-label">User Verification</label>
+                                    <select id="optAuthUserVerification" class="form-select"
+                                        x-model="options.authUserVerification">
+                                        <template x-for="option in userVerificationOpts" :key="option.value">
+                                            <option :value="option.value" x-text="option.label"></option>
+                                        </template>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <p class="mb-1">Authentication Hints (most to least preferred)</p>
+                                    <ordered-checkbox-list id="auth-hints-list" x-init="initAuthHintsList($el)"
+                                        @order-change="handleAuthHintsOrderChange($event)"></ordered-checkbox-list>
+                                    <p class="mb-0 small text-body-secondary">
+                                        Order: <span x-text="formatListOrder(options.authHints)"></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button type="button" class="btn btn-warning btn-sm" @click="resetSettings()">
+                                    Reset Settings
+                                </button>
+                                <button type="button" id="advanced-settings-tips-tricks-open"
+                                    class="btn btn-link btn-sm" @click="openTipsTricks()">
+                                    (tips &amp; tricks)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <dialog id="advanced-settings-tips-tricks" class="rounded-3 border bg-body text-body p-4" aria-labelledby="advanced-settings-tips-tricks-heading">
+                    <p id="advanced-settings-tips-tricks-heading" class="h5">Advanced Settings Tips &amp; Tricks</p>
+                    <p>A brief list of advanced capabilities that may not be immediately obvious when using this
+                        page:</p>
+                    <ul>
+                        <li>
+                            <strong>Sharing the URL</strong> in the address bar after making changes in Advanced
+                            Settings enables others to open this page with the same configuration.
+                        </li>
+                        <li>
+                            Clicking <strong>Authenticate</strong> without entering a username is supported. This
+                            enables testing "usernameless" authentication.
+                        </li>
+                        <li>
+                            Changing <strong>Authentication Settings &gt; User Verification</strong> will restart
+                            conditional UI using the chosen setting.
+                        </li>
+                        <li>
+                            Usernames are remembered across page loads. Clearing the text box or clicking
+                            <strong>Reset Settings</strong> will clear any remembered username.
+                        </li>
+                    </ul>
+                    <button type="button" id="advanced-settings-tips-tricks-close" class="btn btn-primary"
+                        @click="closeTipsTricks()" autofocus>Close</button>
+                </dialog>
+            </div>
+        </template>
+
+        <template x-if="!webauthnSupported">
+            <p class="h5 text-center mb-0">WebAuthn isn't supported. Please consider switching to a modern browser.</p>
+        </template>
+    </div>
+</section>
