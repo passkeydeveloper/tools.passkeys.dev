@@ -105,7 +105,7 @@ document.addEventListener('alpine:init', () => {
             regUserVerification: 'preferred',
             attestation: 'none',
             attachment: 'all',
-            discoverableCredential: 'preferred',
+            discoverableCredential: 'required',
             regPubKeyAlgs: ['ed25519', 'es256', 'rs256'], // See `pubKeyAlgs` for possible values
             regHints: [],
             // Authentication
