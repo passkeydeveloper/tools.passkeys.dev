@@ -70,3 +70,7 @@ _site
 
 .wrangler
 .dev.vars
+
+# Playwright
+test-results
+playwright-report

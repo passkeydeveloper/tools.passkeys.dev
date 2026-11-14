@@ -57,9 +57,9 @@ Preview versions are served from a `*-tools-passkeys-dev.passkeydeveloper.worker
 
 ### Deployment
 
-The site is a Cloudflare Worker serving the built `_site/` directory as static assets (see `wrangler.jsonc`). It is not a Pages project. In Cloudflare, connect the repository under Workers & Pages as a Worker (Workers Builds) with build command `npm run build`, deploy command `npx wrangler deploy`, and non-production branch deploy command `npx wrangler versions upload`.
+The site is a Cloudflare Worker serving the built `_site/` directory as static assets (see `wrangler.jsonc`). It is not a Pages project. In Cloudflare, connect the repository under Workers & Pages as a Worker (Workers Builds) with build command `npm run build`, deploy command `npx wrangler deploy`, and, for non-production branches, preview command `npx wrangler preview` (Worker Previews; the older `npx wrangler versions upload` fails the Workers Builds Worker check once previews are enabled).
 
-To deploy by hand, run `npm run deploy`. `npm run preview` uploads a version without promoting it and prints its preview URL.
+To deploy by hand, run `npm run deploy`. `npm run preview` creates a Preview deployment without promoting anything and prints its preview URL.
 
 ## Structure
 

@@ -48,5 +48,14 @@
             <script src="{{ script }}"></script>
         {% endfor %}
     {% endif %}
+    {% if extra_modules %}
+        {% for script in extra_modules %}
+            <script type="module" src="{{ script }}"></script>
+        {% endfor %}
+    {% endif %}
+    {# Deferred so it runs after module scripts, which have registered their `alpine:init` listeners #}
+    {% if alpine %}
+        <script defer src="/assets/js/alpinejs.3.17.5.min.js"></script>
+    {% endif %}
 </body>
 </html>
