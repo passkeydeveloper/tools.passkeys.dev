@@ -16,7 +16,7 @@
   "scripts": {
     "test": "playwright test",
     "dev": "npm run build && wrangler dev",
-    "build": "npx @11ty/eleventy",
+    "build": "node scripts/ci-diagnostics.mjs && npx @11ty/eleventy",
     "build:watch": "npx @11ty/eleventy --watch",
     "typecheck": "tsc --noEmit",
     "deploy": "npm run typecheck && npm run build && wrangler deploy",

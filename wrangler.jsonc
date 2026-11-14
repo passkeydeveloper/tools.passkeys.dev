@@ -26,7 +26,6 @@
   },
   // Previews don't inherit bindings or vars from the top level, so each has to be repeated here
   "previews": {
-    "observability": { "enabled": true },
     "services": [{ "binding": "WEBAUTHN", "service": "webauthnapi-passkeys-dev" }],
     "vars": {
       "EXPECTED_ORIGINS": "https://tools.passkeys.dev",
