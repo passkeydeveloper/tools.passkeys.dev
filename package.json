@@ -16,11 +16,11 @@
   "scripts": {
     "test": "playwright test",
     "dev": "npm run build && wrangler dev",
-    "build": "node scripts/ci-diagnostics.mjs && npx @11ty/eleventy",
+    "build": "npx @11ty/eleventy",
     "build:watch": "npx @11ty/eleventy --watch",
     "typecheck": "tsc --noEmit",
     "deploy": "npm run typecheck && npm run build && wrangler deploy",
-    "preview": "npm run typecheck && npm run build && wrangler versions upload",
+    "preview": "npm run typecheck && npm run build && wrangler preview",
     "watch": "npx @11ty/eleventy --watch"
   },
   "repository": {
