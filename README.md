@@ -68,6 +68,17 @@ To deploy by hand, run `npm run deploy`. `npm run preview` creates a Preview dep
 - `src/_data/`: Global site metadata.
 - `_site/`: The generated static site (output).
 
+## Header banner
+
+Any page can show an alert bar under the header by adding `banner` to its front matter:
+
+```yaml
+banner:
+  level: info # optional: primary, secondary, success, info (default), warning, danger, light, dark
+  icon: info-circle # optional: Bootstrap Icons name; defaults per level, "" for none
+  text: Heads up! <a href="https://example.com" class="alert-link">Details</a> # required, HTML allowed
+```
+
 ## Sitemaps and SEO
 
 Sitemaps are automatically generated during the build process. SEO metadata (Open Graph, Twitter cards, etc.) is managed via the Eleventy data cascade and layouts. Overrides can be set in the Front Matter of individual pages.
